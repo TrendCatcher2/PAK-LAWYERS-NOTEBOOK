@@ -9,92 +9,51 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Inter:wght@400;500;600;700&family=Spline+Sans+Mono:wght@500;600&family=Noto+Nastaliq+Urdu:wght@500;700&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   WAKALAT — design tokens
-   Palette: legal-ivory paper, deep juris green, brass seal, stamp red
-   ============================================================ */
 :root{
-  --ink:#16201B;        /* green-black ink */
-  --ink-soft:#46544C;
-  --ink-faint:#7C887F;
-  --green:#0B5D3B;      /* primary juris green */
-  --green-deep:#073D27;
-  --green-tint:#E9F0EA;
-  --brass:#B4862F;      /* seal brass/gold */
-  --brass-soft:#C99F4F;
-  --red:#9B2D24;        /* stamp red — urgent only */
-  --paper:#F6F2E9;      /* legal ivory */
-  --card:#FFFDF8;
-  --sand:#EFE9DB;
-  --line:#DED6C4;
-  --line-soft:#E9E2D3;
+  --ink:#16201B;--ink-soft:#46544C;--ink-faint:#7C887F;
+  --green:#0B5D3B;--green-deep:#073D27;--green-tint:#E9F0EA;
+  --brass:#B4862F;--brass-soft:#C99F4F;--red:#9B2D24;
+  --paper:#F6F2E9;--card:#FFFDF8;--sand:#EFE9DB;--line:#DED6C4;--line-soft:#E9E2D3;
   --shadow:0 1px 2px rgba(20,32,24,.05),0 8px 24px rgba(20,32,24,.06);
-  --r:14px; --r-sm:9px; --r-lg:22px;
-  --maxw:1180px;
+  --r:14px;--r-sm:9px;--r-lg:22px;--maxw:1180px;
 }
 [data-theme="dark"]{
-  --ink:#ECE6D8; --ink-soft:#B6BDAF; --ink-faint:#828B7E;
-  --green:#3FA776; --green-deep:#2C8C60; --green-tint:#142A20;
-  --brass:#D2A55B; --brass-soft:#C99F4F;
-  --paper:#0E1611; --card:#15201A; --sand:#1A271F;
-  --line:#283A30; --line-soft:#22332A;
+  --ink:#ECE6D8;--ink-soft:#B6BDAF;--ink-faint:#828B7E;
+  --green:#3FA776;--green-deep:#2C8C60;--green-tint:#142A20;
+  --brass:#D2A55B;--brass-soft:#C99F4F;
+  --paper:#0E1611;--card:#15201A;--sand:#1A271F;--line:#283A30;--line-soft:#22332A;
   --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{
-  font-family:'Inter',sans-serif; color:var(--ink);
-  background:
-    radial-gradient(900px 500px at 85% -10%, rgba(180,134,47,.07), transparent 60%),
-    radial-gradient(800px 500px at -10% 110%, rgba(11,93,59,.07), transparent 55%),
-    var(--paper);
-  -webkit-font-smoothing:antialiased; line-height:1.5;
-}
+body{font-family:'Inter',sans-serif;color:var(--ink);
+  background:radial-gradient(900px 500px at 85% -10%,rgba(180,134,47,.07),transparent 60%),radial-gradient(800px 500px at -10% 110%,rgba(11,93,59,.07),transparent 55%),var(--paper);
+  -webkit-font-smoothing:antialiased;line-height:1.5;}
 button{font-family:inherit;cursor:pointer}
 input,select,textarea{font-family:inherit;font-size:14px}
 .hidden{display:none !important}
-.urdu{font-family:'Noto Nastaliq Urdu',serif; line-height:2.1}
+.urdu{font-family:'Noto Nastaliq Urdu',serif;line-height:2.1}
 
-/* ---------- buttons ---------- */
-.btn{
-  appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);
-  padding:11px 18px;border-radius:var(--r-sm);font-weight:600;font-size:14px;
-  display:inline-flex;align-items:center;gap:8px;justify-content:center;transition:.15s;
-}
+.btn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:11px 18px;border-radius:var(--r-sm);font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;justify-content:center;transition:.15s}
 .btn:hover{border-color:var(--brass);color:var(--green-deep)}
-.btn.primary{
-  background:linear-gradient(180deg,var(--green) 0%,var(--green-deep) 100%);
-  color:#F6F2E9;border-color:var(--green-deep);box-shadow:0 2px 0 var(--green-deep);
-}
+.btn.primary{background:linear-gradient(180deg,var(--green),var(--green-deep));color:#F6F2E9;border-color:var(--green-deep);box-shadow:0 2px 0 var(--green-deep)}
 .btn.primary:hover{filter:brightness(1.06);color:#fff}
 .btn.brass{background:linear-gradient(180deg,var(--brass-soft),var(--brass));color:#2A1E07;border-color:var(--brass);box-shadow:0 2px 0 #8d6a24}
-.btn.ghost{background:transparent;border-color:transparent;color:var(--ink-soft)}
-.btn.ghost:hover{color:var(--green);background:var(--green-tint)}
-.btn.wide{width:100%}
-.btn.sm{padding:7px 12px;font-size:12.5px}
+.btn.wide{width:100%}.btn.sm{padding:7px 12px;font-size:12.5px}
 .link{background:none;border:none;color:var(--green);font-weight:600;text-decoration:underline;text-underline-offset:2px;font-size:13.5px}
 .link.danger{color:var(--red)}
 
-/* ---------- the seal (signature element) ---------- */
-.seal{display:block}
 .seal .ring{fill:none;stroke:var(--brass);stroke-width:1.4}
 .seal .ring2{fill:none;stroke:var(--brass);stroke-width:.7;opacity:.7}
 .seal .scale{fill:none;stroke:var(--green);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.seal .post{stroke:var(--green-deep)}
-.seal .dot{fill:var(--brass)}
+.seal .post{stroke:var(--green-deep)}.seal .dot{fill:var(--brass)}
 .seal .sealtext{fill:var(--green-deep);font-family:'Marcellus',serif;font-size:5.4px;letter-spacing:1.5px}
 [data-theme="dark"] .seal .scale{stroke:var(--green)}
 [data-theme="dark"] .seal .sealtext{fill:var(--brass)}
 
-/* ============================================================
-   GATE screens (auth / profile / paywall)
-   ============================================================ */
 .gate{min-height:100dvh;display:grid;place-items:center;padding:26px 16px}
 .gate-wrap{width:100%;max-width:440px}
-.gate-card{
-  background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);
-  padding:30px 28px;box-shadow:var(--shadow);
-}
+.gate-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);padding:30px 28px;box-shadow:var(--shadow)}
 .brand{display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;margin-bottom:6px}
 .wordmark{display:flex;align-items:baseline;gap:10px}
 .wordmark .ur{font-family:'Noto Nastaliq Urdu',serif;font-size:30px;color:var(--green-deep);line-height:1}
@@ -104,28 +63,21 @@ input,select,textarea{font-family:inherit;font-size:14px}
 .slogan .ur{font-size:14px;color:var(--ink-soft);display:block;margin-bottom:2px}
 .gate-h{font-family:'Marcellus',serif;font-size:21px;letter-spacing:.5px;margin:22px 0 4px;text-align:center}
 .gate-sub{font-size:13px;color:var(--ink-faint);text-align:center;margin-bottom:20px}
-
 .tabs{display:flex;background:var(--sand);border:1px solid var(--line);border-radius:var(--r-sm);padding:4px;margin-bottom:18px}
 .tabs button{flex:1;border:none;background:none;padding:9px;border-radius:6px;font-weight:600;font-size:13.5px;color:var(--ink-soft)}
 .tabs button.on{background:var(--card);color:var(--green-deep);box-shadow:0 1px 2px rgba(0,0,0,.06)}
-
 .field{margin-bottom:14px}
 .field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:6px}
 .field label .req{color:var(--red)}
-.field input,.field select,.field textarea{
-  width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:var(--r-sm);
-  background:var(--paper);color:var(--ink);transition:.15s;
-}
+.field input,.field select,.field textarea{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--paper);color:var(--ink);transition:.15s}
 .field input:focus,.field select:focus,.field textarea:focus{outline:none;border-color:var(--green);box-shadow:0 0 0 3px var(--green-tint)}
 .field textarea{resize:vertical;min-height:74px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .note{font-size:12px;color:var(--ink-faint);text-align:center;margin-top:14px;line-height:1.6}
-
-/* avatar */
 .av-row{display:flex;align-items:center;gap:14px;margin-bottom:16px}
-.av{width:66px;height:66px;border-radius:50%;border:2px solid var(--brass);object-fit:cover;background:var(--green-tint);display:grid;place-items:center;color:var(--green);font-weight:700;font-size:24px;font-family:'Marcellus',serif}
+.av{width:66px;height:66px;border-radius:50%;border:2px solid var(--brass);object-fit:cover;background:var(--green-tint);display:grid;place-items:center;color:var(--green);font-weight:700;font-size:24px;font-family:'Marcellus',serif;background-position:center}
 
-/* ---------- paywall ---------- */
+/* plans / payment */
 .plans{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
 .plan{border:1.5px solid var(--line);border-radius:var(--r);padding:16px 14px;background:var(--card);cursor:pointer;position:relative;transition:.15s;text-align:center}
 .plan:hover{border-color:var(--brass)}
@@ -137,7 +89,6 @@ input,select,textarea{font-family:inherit;font-size:14px}
 [data-theme="dark"] .plan .price{color:var(--brass)}
 .plan .pr{font-size:9px;font-weight:700;color:var(--green);position:absolute;top:9px;right:10px;opacity:0}
 .plan.on .pr{opacity:1}
-
 .pay-methods{display:flex;flex-direction:column;gap:8px;margin-bottom:14px}
 .pm{display:flex;align-items:center;gap:11px;border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 11px;background:var(--card)}
 .pm .ic{width:36px;height:36px;border-radius:8px;flex:none;display:grid;place-items:center;color:#fff;font-weight:700;font-size:12px;font-family:'Spline Sans Mono',monospace}
@@ -154,40 +105,44 @@ input,select,textarea{font-family:inherit;font-size:14px}
 .divider{display:flex;align-items:center;gap:10px;color:var(--ink-faint);font-size:11.5px;margin:16px 0;text-transform:uppercase;letter-spacing:1px}
 .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
 
-/* ============================================================
-   APP SHELL
-   ============================================================ */
+/* app shell */
 #appShell{min-height:100dvh;display:flex;flex-direction:column}
-.topbar{
-  position:sticky;top:0;z-index:40;background:linear-gradient(180deg,var(--green) 0%,var(--green-deep) 100%);
-  color:#F2EEE3;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;
-  box-shadow:0 2px 14px rgba(7,61,39,.25)
-}
-.topbar .tb-brand{display:flex;align-items:center;gap:10px}
-.topbar .tb-brand .ur{font-family:'Noto Nastaliq Urdu',serif;font-size:21px;color:#F4D58D;line-height:1}
-.topbar .tb-brand .en{font-family:'Marcellus',serif;font-size:17px;letter-spacing:2.5px;text-transform:uppercase}
-.tb-right{display:flex;align-items:center;gap:8px}
+.topbar{position:sticky;top:0;z-index:40;background:linear-gradient(180deg,var(--green),var(--green-deep));color:#F2EEE3;padding:10px 16px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 14px rgba(7,61,39,.25)}
+.tb-brand{display:flex;align-items:center;gap:9px;flex:none}
+.tb-brand .ur{font-family:'Noto Nastaliq Urdu',serif;font-size:20px;color:#F4D58D;line-height:1}
+.tb-brand .en{font-family:'Marcellus',serif;font-size:16px;letter-spacing:2px;text-transform:uppercase}
+.tb-search{flex:1;max-width:460px;position:relative}
+.tb-search input{width:100%;padding:9px 12px 9px 34px;border-radius:30px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.12);color:#fff;font-size:13.5px}
+.tb-search input::placeholder{color:rgba(242,238,227,.7)}
+.tb-search input:focus{outline:none;background:rgba(255,255,255,.2)}
+.tb-search .si{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:.8;font-size:13px}
+.tb-right{display:flex;align-items:center;gap:8px;flex:none;margin-left:auto}
 .icon-btn{width:36px;height:36px;border-radius:9px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#F2EEE3;display:grid;place-items:center;font-size:15px}
 .icon-btn:hover{background:rgba(255,255,255,.18)}
 .userchip{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:5px 10px 5px 5px;border-radius:30px;color:#F2EEE3;font-size:13px;font-weight:600}
 .userchip .av{width:28px;height:28px;font-size:13px;border-width:1.5px}
 
-.tabbar{display:flex;gap:4px;background:var(--card);border-bottom:1px solid var(--line);padding:0 14px;overflow-x:auto;position:sticky;top:60px;z-index:30}
-.tabbar button{border:none;background:none;padding:13px 15px;font-weight:600;font-size:13.5px;color:var(--ink-faint);border-bottom:2.5px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:7px}
+.trial{background:linear-gradient(90deg,rgba(180,134,47,.16),rgba(180,134,47,.07));border-bottom:1px solid var(--line);color:var(--ink);padding:9px 16px;font-size:13px;display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap}
+.trial b{color:var(--green-deep)}
+[data-theme="dark"] .trial b{color:var(--brass)}
+
+.tabbar{display:flex;gap:4px;background:var(--card);border-bottom:1px solid var(--line);padding:0 12px;overflow-x:auto;position:sticky;top:56px;z-index:30}
+.tabbar button{border:none;background:none;padding:13px 14px;font-weight:600;font-size:13.5px;color:var(--ink-faint);border-bottom:2.5px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:7px}
 .tabbar button.on{color:var(--green-deep);border-bottom-color:var(--brass)}
 [data-theme="dark"] .tabbar button.on{color:var(--green)}
 .tabbar .pill{background:var(--red);color:#fff;border-radius:20px;font-size:10px;font-weight:700;padding:1px 6px;min-width:17px;text-align:center}
 
-main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 60px}
-.view{display:none}
-.view.on{display:block;animation:fade .25s ease}
+main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 80px}
+.view{display:none}.view.on{display:block;animation:fade .25s ease}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
-.page-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.page-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}
 .page-head h2{font-family:'Marcellus',serif;font-size:23px;font-weight:400;letter-spacing:.3px}
 .page-head .sub{font-size:13px;color:var(--ink-faint);margin-top:2px}
 
-/* stat cards */
+.explain{background:var(--green-tint);border:1px solid var(--line);border-left:3px solid var(--green);border-radius:var(--r-sm);padding:11px 14px;font-size:13px;color:var(--ink-soft);margin-bottom:16px}
+.explain b{color:var(--green-deep)}
+[data-theme="dark"] .explain b{color:var(--green)}
+
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:22px}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:15px 16px;box-shadow:var(--shadow)}
 .stat .n{font-family:'Marcellus',serif;font-size:30px;color:var(--green-deep);line-height:1}
@@ -195,10 +150,9 @@ main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 60p
 .stat .l{font-size:12px;color:var(--ink-faint);margin-top:5px;text-transform:uppercase;letter-spacing:.6px}
 .stat.alert .n{color:var(--red)}
 
-/* alert items */
 .alert{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--brass);border-radius:var(--r-sm);padding:13px 15px;margin-bottom:10px}
 .alert.urgent{border-left-color:var(--red);background:linear-gradient(90deg,rgba(155,45,36,.05),var(--card) 40%)}
-.alert .when{flex:none;text-align:center;min-width:54px}
+.alert .when{flex:none;text-align:center;min-width:48px}
 .alert .when .d{font-family:'Marcellus',serif;font-size:22px;color:var(--green-deep);line-height:1}
 .alert.urgent .when .d{color:var(--red)}
 .alert .when .m{font-size:10.5px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.5px}
@@ -209,7 +163,6 @@ main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 60p
 .tag.client{background:var(--sand);color:var(--ink-soft)}
 .tag.mine{background:var(--green-tint);color:var(--green-deep)}
 
-/* case cards */
 .cases{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
 .case{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);transition:.15s}
 .case:hover{border-color:var(--brass);transform:translateY(-2px)}
@@ -229,18 +182,34 @@ main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 60p
 .case .rem{background:var(--paper);border:1px solid var(--line-soft);border-radius:7px;padding:8px 10px;font-size:12.5px;color:var(--ink-soft);margin-top:8px;font-style:italic}
 .case .acts{display:flex;gap:7px;margin-top:12px}
 
-/* filters bar */
 .bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
 .bar input,.bar select{padding:9px 12px;border:1px solid var(--line);border-radius:var(--r-sm);background:var(--card);color:var(--ink)}
 .bar input{flex:1;min-width:180px}
 
-/* empty state */
-.empty{text-align:center;padding:54px 20px;color:var(--ink-faint)}
-.empty .seal{margin:0 auto 14px;opacity:.55}
+.empty{text-align:center;padding:50px 20px;color:var(--ink-faint)}
+.empty .seal{margin:0 auto 14px;opacity:.55;display:block}
 .empty h3{font-family:'Marcellus',serif;font-weight:400;color:var(--ink-soft);font-size:19px;margin-bottom:6px}
-.empty p{font-size:13.5px;max-width:340px;margin:0 auto 16px}
+.empty p{font-size:13.5px;max-width:360px;margin:0 auto 16px}
 
-/* calendar */
+/* judgments */
+.jud-tools{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:20px}
+.tool{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.tool h3{font-family:'Marcellus',serif;font-weight:400;font-size:17px;margin-bottom:4px}
+.tool .d{font-size:12.5px;color:var(--ink-faint);margin-bottom:12px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.chip{border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);border-radius:30px;padding:6px 13px;font-size:12.5px;font-weight:600}
+.chip.on{background:var(--green);color:#fff;border-color:var(--green-deep)}
+.row{display:flex;gap:8px}.row input{flex:1}
+.jcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:15px;box-shadow:var(--shadow);margin-bottom:12px}
+.jcard .cite{font-family:'Spline Sans Mono',monospace;font-size:12.5px;color:var(--brass);font-weight:600}
+.jcard .cn{font-weight:700;font-size:15px;margin:3px 0;color:var(--green-deep)}
+[data-theme="dark"] .jcard .cn{color:var(--brass)}
+.jcard .jm{font-size:12.5px;color:var(--ink-soft);margin-bottom:6px}
+.jcard .hold{font-size:13px;color:var(--ink);background:var(--paper);border-left:3px solid var(--brass);border-radius:6px;padding:8px 10px}
+.jtags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.jtag{font-size:11px;background:var(--green-tint);color:var(--green-deep);border-radius:20px;padding:2px 9px;font-weight:600}
+[data-theme="dark"] .jtag{color:var(--green)}
+
 .cal{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
 .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .cal-head h3{font-family:'Marcellus',serif;font-weight:400;font-size:18px}
@@ -250,49 +219,47 @@ main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 60p
 .cal-day.out{opacity:.35}
 .cal-day.today{border-color:var(--brass);box-shadow:inset 0 0 0 1px var(--brass)}
 .cal-day .dn{font-weight:700;color:var(--ink-soft)}
-.cal-ev{background:var(--green);color:#fff;border-radius:4px;padding:2px 4px;margin-top:3px;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:default}
+.cal-ev{background:var(--green);color:#fff;border-radius:4px;padding:2px 4px;margin-top:3px;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .cal-ev.mine{background:var(--brass);color:#2A1E07}
 
-/* settings */
-.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);margin-bottom:16px;max-width:620px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:var(--shadow);margin-bottom:16px;max-width:640px}
 .panel h3{font-family:'Marcellus',serif;font-weight:400;font-size:18px;margin-bottom:4px}
 .panel .desc{font-size:12.5px;color:var(--ink-faint);margin-bottom:16px}
 .kv{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line-soft);font-size:13.5px}
-.kv:last-child{border-bottom:none}
-.kv .k{color:var(--ink-faint)}
-.kv .v{font-weight:600;text-align:right}
+.kv:last-child{border-bottom:none}.kv .k{color:var(--ink-faint)}.kv .v{font-weight:600;text-align:right}
 .sub-status{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:4px 11px;border-radius:20px}
 .sub-status.ok{background:var(--green-tint);color:var(--green-deep)}
 .sub-status.exp{background:rgba(155,45,36,.1);color:var(--red)}
 
-/* modal */
 .overlay{position:fixed;inset:0;background:rgba(15,22,17,.55);backdrop-filter:blur(3px);z-index:100;display:none;align-items:center;justify-content:center;padding:18px}
 .overlay.on{display:flex}
 .modal{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);width:100%;max-width:560px;max-height:92dvh;overflow-y:auto;box-shadow:var(--shadow)}
-.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 22px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card);z-index:2}
 .modal-head h3{font-family:'Marcellus',serif;font-weight:400;font-size:19px}
 .modal-body{padding:20px 22px}
 .modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:16px 22px;border-top:1px solid var(--line);position:sticky;bottom:0;background:var(--card)}
 
-/* toast */
-#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--paper);padding:12px 20px;border-radius:30px;font-size:13.5px;font-weight:600;z-index:200;opacity:0;transition:.3s;box-shadow:0 8px 30px rgba(0,0,0,.3)}
+/* global search results */
+.sr-item{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:8px;cursor:pointer}
+.sr-item:hover{border-color:var(--brass)}
+.sr-kind{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--brass)}
+.sr-title{font-weight:600;font-size:14px;margin-top:2px}
+.sr-meta{font-size:12px;color:var(--ink-faint);margin-top:2px}
+
+#toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:var(--paper);padding:12px 20px;border-radius:30px;font-size:13.5px;font-weight:600;z-index:200;opacity:0;transition:.3s;box-shadow:0 8px 30px rgba(0,0,0,.3);max-width:90vw;text-align:center}
 #toast.on{transform:translateX(-50%) translateY(0);opacity:1}
-
-/* fab */
 .fab{position:fixed;right:20px;bottom:22px;width:56px;height:56px;border-radius:50%;border:none;background:linear-gradient(180deg,var(--brass-soft),var(--brass));color:#2A1E07;font-size:26px;box-shadow:0 6px 22px rgba(180,134,47,.45);z-index:50;display:grid;place-items:center}
-.fab:hover{filter:brightness(1.05)}
 
-@media(max-width:560px){
-  .grid2{grid-template-columns:1fr}
-  .plans{grid-template-columns:1fr}
-  .userchip span.nm{display:none}
-  main{padding:18px 13px 70px}
+@media(max-width:620px){
+  .grid2{grid-template-columns:1fr}.plans{grid-template-columns:1fr}
+  .userchip span.nm{display:none}.tb-brand .en{display:none}
+  main{padding:18px 13px 80px}
 }
 </style>
 </head>
 <body>
 
-<!-- =================== AUTH =================== -->
+<!-- AUTH -->
 <div class="gate" id="authScreen">
   <div class="gate-wrap">
     <div class="gate-card">
@@ -301,40 +268,35 @@ main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 60p
         <div class="wordmark"><span class="ur">وکالت</span><span class="en">Wakalat</span></div>
         <div class="slogan"><span class="urdu">ہر پیشی، ہر مثل — ایک جگہ</span>Every hearing, every file, in one place.</div>
       </div>
-
       <div class="tabs" id="authTabs">
         <button class="on" data-tab="login">Sign in</button>
         <button data-tab="register">Create account</button>
       </div>
-
-      <!-- login -->
       <div id="loginForm">
-        <div class="field"><label>Email or phone <span class="req">*</span></label><input id="liEmail" type="text" placeholder="you@example.com / 03xx-xxxxxxx" autocomplete="username"></div>
-        <div class="field"><label>Password <span class="req">*</span></label><input id="liPass" type="password" placeholder="Your password" autocomplete="current-password"></div>
-        <button class="btn primary wide" id="liBtn">Sign in to chambers</button>
-        <div class="note"><button class="link" id="toReg">New here? Create a free account</button></div>
+        <div class="field"><label>Email or phone <span class="req">*</span></label><input id="liEmail" type="text" placeholder="you@example.com / 03xx-xxxxxxx"></div>
+        <div class="field"><label>Password <span class="req">*</span></label><input id="liPass" type="password" placeholder="Your password"></div>
+        <button class="btn primary wide" id="liBtn">Sign in</button>
+        <div class="note"><button class="link" id="toReg">New here? Create a free account</button> · <button class="link" id="forgot">Forgot password?</button></div>
       </div>
-
-      <!-- register -->
       <div id="registerForm" class="hidden">
         <div class="field"><label>Full name <span class="req">*</span></label><input id="rgName" type="text" placeholder="Adv. Your Name"></div>
-        <div class="field"><label>Email or phone <span class="req">*</span></label><input id="rgEmail" type="text" placeholder="you@example.com / 03xx-xxxxxxx"></div>
+        <div class="field"><label>Email <span class="req">*</span></label><input id="rgEmail" type="text" placeholder="you@example.com"></div>
+        <div class="field"><label>Phone <span class="req">*</span></label><input id="rgPhone" type="text" placeholder="03xx-xxxxxxx"></div>
         <div class="field"><label>Password <span class="req">*</span></label><input id="rgPass" type="password" placeholder="At least 6 characters"></div>
-        <button class="btn primary wide" id="rgBtn">Create account</button>
-        <div class="note">By continuing you agree this is a record-keeping tool, not a substitute for filing with the court.<br><button class="link" id="toLogin">Already registered? Sign in</button></div>
+        <button class="btn primary wide" id="rgBtn">Create free account</button>
+        <div class="note">It's free to register and explore. You only subscribe when you want to save your work.<br><button class="link" id="toLogin">Already registered? Sign in</button></div>
       </div>
     </div>
     <div class="note" style="margin-top:14px">Pakistan's digital legal chambers · وکالت</div>
   </div>
 </div>
 
-<!-- =================== PROFILE / ONBOARDING =================== -->
+<!-- PROFILE -->
 <div class="gate hidden" id="profileScreen">
   <div class="gate-wrap">
     <div class="gate-card">
       <h2 class="gate-h" id="profTitle">Set up your chambers</h2>
-      <p class="gate-sub">This appears on your dashboard and (optionally) the lawyer directory.</p>
-
+      <p class="gate-sub">This appears on your dashboard. You can change it anytime.</p>
       <div class="av-row">
         <div class="av" id="profAv">?</div>
         <div>
@@ -343,17 +305,10 @@ main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 60p
           <div class="note" style="text-align:left;margin-top:6px">JPG/PNG, under 2 MB</div>
         </div>
       </div>
-
       <div class="field"><label>Full name <span class="req">*</span></label><input id="pfName" type="text" placeholder="Adv. Your Name"></div>
       <div class="grid2">
         <div class="field"><label>Practice area <span class="req">*</span></label>
-          <select id="pfArea">
-            <option value="">Choose…</option>
-            <option>Criminal</option><option>Civil</option><option>Family</option>
-            <option>Corporate / Commercial</option><option>Constitutional</option>
-            <option>Tax</option><option>Property / Revenue</option><option>Intellectual Property</option>
-            <option>Banking</option><option>Service / Labour</option><option>Other</option>
-          </select>
+          <select id="pfArea"><option value="">Choose…</option><option>Criminal</option><option>Civil</option><option>Family</option><option>Corporate / Commercial</option><option>Constitutional</option><option>Tax</option><option>Property / Revenue</option><option>Intellectual Property</option><option>Banking</option><option>Service / Labour</option><option>Other</option></select>
         </div>
         <div class="field"><label>Experience (years)</label><input id="pfExp" type="number" min="0" placeholder="e.g. 5"></div>
       </div>
@@ -361,65 +316,34 @@ main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 60p
         <div class="field"><label>City <span class="req">*</span></label><input id="pfCity" type="text" placeholder="e.g. Turbat / Karachi"></div>
         <div class="field"><label>Bar enrolment no.</label><input id="pfBar" type="text" placeholder="optional"></div>
       </div>
-      <div class="field"><label>Short bio</label><textarea id="pfBio" maxlength="220" placeholder="One line about your practice (optional)"></textarea></div>
-
-      <button class="btn primary wide" id="pfSave">Save & continue</button>
+      <button class="btn primary wide" id="pfSave">Save & enter</button>
       <div class="note"><button class="link danger" id="pfSignout">Sign out</button></div>
     </div>
   </div>
 </div>
 
-<!-- =================== PAYWALL =================== -->
-<div class="gate hidden" id="paywallScreen">
-  <div class="gate-wrap">
-    <div class="gate-card">
-      <div class="brand" style="margin-bottom:14px">
-        <svg class="seal" width="58" height="58" viewBox="0 0 80 80" id="sealPay"></svg>
-        <div class="wordmark"><span class="ur">وکالت</span><span class="en" style="font-size:22px">Wakalat</span></div>
-      </div>
-      <h2 class="gate-h">Activate your subscription</h2>
-      <p class="gate-sub">Choose a plan, pay by Easypaisa / UPaisa / bank, then send the receipt on WhatsApp. We unlock you the same day.</p>
-
-      <div class="plans" id="planPick">
-        <div class="plan on" data-plan="1m"><span class="pr">✓ Selected</span><div class="price">₨250</div><div class="per">per month</div></div>
-        <div class="plan" data-plan="6m"><span class="badge">Best value</span><span class="pr">✓ Selected</span><div class="price">₨1,000</div><div class="per">for 6 months</div><div class="save">Save ₨500</div></div>
-      </div>
-
-      <div class="pay-methods" id="payMethods"></div>
-
-      <div class="ref-box">Your reference code <b id="refCode">WK-000000</b><br><span>Write this in the payment note &amp; your WhatsApp message.</span></div>
-
-      <button class="btn wa wide" id="waBtn">Send payment proof on WhatsApp</button>
-
-      <div class="divider">After we confirm</div>
-      <div class="field"><label>Enter the unlock code we send you</label><input id="unlockInput" type="text" placeholder="Paste unlock code here" style="font-family:'Spline Sans Mono',monospace;text-align:center;letter-spacing:1px"></div>
-      <button class="btn primary wide" id="unlockBtn">Unlock Wakalat</button>
-
-      <div class="note">
-        Questions? Email <b>trendcatcher299@gmail.com</b><br>
-        <button class="link danger" id="paySignout">Sign out</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- =================== APP SHELL =================== -->
+<!-- APP -->
 <div id="appShell" class="hidden">
   <div class="topbar">
-    <div class="tb-brand">
-      <svg class="seal" width="34" height="34" viewBox="0 0 80 80" id="sealTop"></svg>
-      <div><span class="ur">وکالت</span> <span class="en">Wakalat</span></div>
-    </div>
+    <div class="tb-brand"><svg class="seal" width="32" height="32" viewBox="0 0 80 80" id="sealTop"></svg><div><span class="ur">وکالت</span> <span class="en">Wakalat</span></div></div>
+    <div class="tb-search"><span class="si">🔎</span><input id="globalSearch" placeholder="Search all your cases & judgments…"></div>
     <div class="tb-right">
-      <button class="icon-btn" id="themeBtn" title="Toggle theme">◐</button>
+      <button class="btn brass sm" id="subBtn" style="display:none">Subscribe</button>
+      <button class="icon-btn" id="themeBtn" title="Theme">◐</button>
       <button class="userchip" id="userChip"><span class="av" id="chipAv">?</span><span class="nm" id="chipName">You</span></button>
     </div>
   </div>
 
+  <div class="trial hidden" id="trialBanner">
+    <span>You're exploring in <b>trial mode</b> — add and try everything, but your work isn't saved yet.</span>
+    <button class="btn brass sm" id="trialSub">Subscribe to save</button>
+  </div>
+
   <div class="tabbar" id="tabbar">
-    <button class="on" data-view="vAlerts">⚖︎ Hearings & alerts <span class="pill hidden" id="alertPill">0</span></button>
+    <button class="on" data-view="vAlerts">⚖︎ Hearings &amp; alerts <span class="pill hidden" id="alertPill">0</span></button>
     <button data-view="vMine">📁 My cases</button>
     <button data-view="vClient">👤 Client cases</button>
+    <button data-view="vJud">📜 Judgments &amp; research</button>
     <button data-view="vCal">🗓 Calendar</button>
     <button data-view="vSettings">⚙︎ Settings</button>
   </div>
@@ -427,71 +351,88 @@ main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 60p
   <main>
     <!-- ALERTS -->
     <section class="view on" id="vAlerts">
-      <div class="page-head"><div><h2>Hearings & alerts</h2><div class="sub" id="alertSub">Your upcoming court dates, nearest first.</div></div></div>
+      <div class="page-head"><div><h2>Hearings &amp; alerts</h2><div class="sub">Your upcoming court dates (پیشی), nearest first.</div></div></div>
       <div class="stats" id="statRow"></div>
       <div id="alertList"></div>
     </section>
 
     <!-- MY CASES -->
     <section class="view" id="vMine">
-      <div class="page-head">
-        <div><h2>My cases</h2><div class="sub">Matters where you are the principal — track status, next hearing &amp; notes.</div></div>
-        <button class="btn primary" id="addMine">＋ New matter</button>
-      </div>
-      <div class="bar">
-        <input id="mineSearch" placeholder="Search by title, court, party…">
-        <select id="mineFilter"><option value="ALL">All statuses</option><option>Active</option><option>Hold</option><option>Complete</option></select>
-      </div>
+      <div class="page-head"><div><h2>My cases</h2></div><button class="btn primary" id="addMine">＋ New matter</button></div>
+      <div class="explain"><b>My cases</b> are matters where <b>you are personally a party</b> — your own property dispute, a family matter, or any case you are fighting for yourself. Use this to keep your personal litigation separate from client work.</div>
+      <div class="bar"><input id="mineSearch" placeholder="Filter my cases…"><select id="mineFilter"><option value="ALL">All statuses</option><option>Active</option><option>Hold</option><option>Complete</option></select></div>
       <div class="cases" id="mineList"></div>
     </section>
 
     <!-- CLIENT CASES -->
     <section class="view" id="vClient">
-      <div class="page-head">
-        <div><h2>Client cases</h2><div class="sub">Matters you represent for clients — hearing, counsel &amp; outcome.</div></div>
-        <button class="btn primary" id="addClient">＋ New client case</button>
-      </div>
-      <div class="bar">
-        <input id="clientSearch" placeholder="Search by client, counsel, court…">
-        <select id="clientFilter"><option value="ALL">All statuses</option><option>Active</option><option>Hold</option><option>Complete</option></select>
-      </div>
+      <div class="page-head"><div><h2>Client cases</h2></div><button class="btn primary" id="addClient">＋ New client case</button></div>
+      <div class="explain"><b>Client cases</b> are matters you handle <b>on behalf of clients</b> — your professional caseload. These carry the client's name and co-counsel, so you can track who you represent and the outcome for each.</div>
+      <div class="bar"><input id="clientSearch" placeholder="Filter client cases…"><select id="clientFilter"><option value="ALL">All statuses</option><option>Active</option><option>Hold</option><option>Complete</option></select></div>
       <div class="cases" id="clientList"></div>
+    </section>
+
+    <!-- JUDGMENTS -->
+    <section class="view" id="vJud">
+      <div class="page-head"><div><h2>Judgments &amp; research</h2><div class="sub">Build a citation library and search Pakistani &amp; foreign case law.</div></div><button class="btn primary" id="addJud">＋ New judgment</button></div>
+
+      <div class="jud-tools">
+        <div class="tool">
+          <h3>Legal web search</h3>
+          <div class="d">Pick a source, type your terms, and we open Google with the right legal filters.</div>
+          <div class="chips" id="searchChips">
+            <button class="chip on" data-preset="none">General</button>
+            <button class="chip" data-preset="sc">Supreme Court</button>
+            <button class="chip" data-preset="hc">High Courts</button>
+            <button class="chip" data-preset="india">Indian law</button>
+            <button class="chip" data-preset="pdf">PDF judgments</button>
+          </div>
+          <div class="row"><input id="webQuery" placeholder='e.g. bail in narcotics case'><button class="btn primary" id="webGo">Search</button></div>
+        </div>
+
+        <div class="tool">
+          <h3>AI auto-fill (Gemini 2.5 Flash)</h3>
+          <div class="d">Paste a judgment's text (or a link), then let AI fill the citation, court, holding and tags. Uses <b>your own</b> Google AI Studio key — it stays in this browser.</div>
+          <div class="field"><label>Gemini API key</label><input id="aiKey" type="password" placeholder="Paste your AI Studio API key"></div>
+          <div class="field"><label>Judgment text or URL</label><textarea id="aiText" placeholder="Paste the judgment text here (recommended), or a public URL to fetch…"></textarea></div>
+          <button class="btn brass" id="aiRun">✦ Auto-fill a new judgment</button>
+        </div>
+      </div>
+
+      <div class="bar"><input id="judSearch" placeholder="Filter saved judgments…"></div>
+      <div id="judList"></div>
     </section>
 
     <!-- CALENDAR -->
     <section class="view" id="vCal">
       <div class="page-head"><div><h2>Calendar</h2><div class="sub">All hearings across your matters.</div></div></div>
       <div class="cal">
-        <div class="cal-head">
-          <button class="btn sm" id="calPrev">‹ Prev</button>
-          <h3 id="calLabel">Month</h3>
-          <button class="btn sm" id="calNext">Next ›</button>
-        </div>
+        <div class="cal-head"><button class="btn sm" id="calPrev">‹ Prev</button><h3 id="calLabel">Month</h3><button class="btn sm" id="calNext">Next ›</button></div>
         <div class="cal-grid" id="calGrid"></div>
       </div>
     </section>
 
     <!-- SETTINGS -->
     <section class="view" id="vSettings">
-      <div class="page-head"><div><h2>Settings</h2><div class="sub">Profile, subscription &amp; data.</div></div></div>
+      <div class="page-head"><div><h2>Settings</h2></div></div>
 
       <div class="panel">
         <h3>Subscription</h3>
-        <div class="desc">Your Wakalat access status.</div>
+        <div class="desc">Save your work and unlock everything.</div>
         <div class="kv"><span class="k">Status</span><span class="v" id="setSubStatus">—</span></div>
         <div class="kv"><span class="k">Plan</span><span class="v" id="setSubPlan">—</span></div>
-        <div class="kv"><span class="k">Renews / expires</span><span class="v" id="setSubExp">—</span></div>
-        <div class="kv"><span class="k">Reference</span><span class="v" id="setSubRef">—</span></div>
+        <div class="kv"><span class="k">Expires</span><span class="v" id="setSubExp">—</span></div>
+        <div class="kv"><span class="k">Your reference</span><span class="v" id="setSubRef">—</span></div>
+        <div style="margin-top:14px"><button class="btn primary" id="setSubBtn">Subscribe / renew</button></div>
       </div>
 
       <div class="panel">
         <h3>Profile</h3>
-        <div class="desc">How you appear in Wakalat.</div>
         <div class="kv"><span class="k">Name</span><span class="v" id="setName">—</span></div>
         <div class="kv"><span class="k">Practice area</span><span class="v" id="setArea">—</span></div>
         <div class="kv"><span class="k">City</span><span class="v" id="setCity">—</span></div>
-        <div class="kv"><span class="k">Experience</span><span class="v" id="setExp">—</span></div>
-        <div style="margin-top:14px;display:flex;gap:10px"><button class="btn" id="editProfile">Edit profile</button></div>
+        <div class="kv"><span class="k">Phone</span><span class="v" id="setPhone">—</span></div>
+        <div style="margin-top:14px"><button class="btn" id="editProfile">Edit profile</button></div>
       </div>
 
       <div class="panel">
@@ -505,8 +446,8 @@ main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 60p
       </div>
 
       <div class="panel" id="adminPanel" style="display:none">
-        <h3>Admin — generate unlock code</h3>
-        <div class="desc">Confirm payment landed in your account first, then make a code for the lawyer's reference.</div>
+        <h3>Admin — issue unlock codes</h3>
+        <div class="desc">Subscription requests reach you on <b>WhatsApp 0332-3254841</b> and <b>email trendcatcher299@gmail.com</b>, each carrying the lawyer's reference (e.g. WK-AB12CD). Confirm the payment landed, then issue their code below.</div>
         <div class="field"><label>Lawyer's reference code</label><input id="adRef" placeholder="WK-XXXXXX" style="font-family:'Spline Sans Mono',monospace"></div>
         <div class="field"><label>Plan paid</label><select id="adPlan"><option value="1m">1 month — ₨250</option><option value="6m">6 months — ₨1,000</option></select></div>
         <button class="btn brass" id="adGen">Generate unlock code</button>
@@ -522,11 +463,10 @@ main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 60p
       </div>
     </section>
   </main>
-
   <button class="fab" id="fab" title="Quick add">＋</button>
 </div>
 
-<!-- =================== CASE MODAL (shared) =================== -->
+<!-- CASE MODAL -->
 <div class="overlay" id="caseOverlay">
   <div class="modal">
     <div class="modal-head"><h3 id="caseModalTitle">New matter</h3><button class="icon-btn" id="caseClose" style="border-color:var(--line);background:var(--sand);color:var(--ink)">✕</button></div>
@@ -534,19 +474,8 @@ main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 60p
       <input type="hidden" id="cId"><input type="hidden" id="cKind">
       <div class="field"><label>Case / matter title <span class="req">*</span></label><input id="cTitle" placeholder="e.g. Khan vs Federation"></div>
       <div class="grid2">
-        <div class="field"><label>Status <span class="req">*</span></label>
-          <select id="cStatus"><option>Active</option><option>Hold</option><option>Complete</option></select>
-        </div>
-        <div class="field"><label>Court</label>
-          <select id="cCourt">
-            <option value="">Choose…</option>
-            <option>Supreme Court of Pakistan</option><option>Lahore High Court</option>
-            <option>Sindh High Court</option><option>Balochistan High Court</option>
-            <option>Peshawar High Court</option><option>Islamabad High Court</option>
-            <option>District &amp; Sessions Court</option><option>Civil Court</option>
-            <option>Family Court</option><option>Banking Court</option><option>Anti-Terrorism Court</option><option>Tribunal</option><option>Other</option>
-          </select>
-        </div>
+        <div class="field"><label>Status <span class="req">*</span></label><select id="cStatus"><option>Active</option><option>Hold</option><option>Complete</option></select></div>
+        <div class="field"><label>Court</label><select id="cCourt"><option value="">Choose…</option><option>Supreme Court of Pakistan</option><option>Lahore High Court</option><option>Sindh High Court</option><option>Balochistan High Court</option><option>Peshawar High Court</option><option>Islamabad High Court</option><option>District &amp; Sessions Court</option><option>Civil Court</option><option>Family Court</option><option>Banking Court</option><option>Anti-Terrorism Court</option><option>Tribunal</option><option>Other</option></select></div>
       </div>
       <div class="grid2">
         <div class="field"><label>Case / FIR no.</label><input id="cNumber" placeholder="optional"></div>
@@ -562,9 +491,51 @@ main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 60p
       </div>
       <div class="field"><label>Remarks / notes</label><textarea id="cNotes" placeholder="Adjournment reason, directions, follow-ups, what to prepare…"></textarea></div>
     </div>
-    <div class="modal-foot">
-      <button class="btn" id="caseCancel">Cancel</button>
-      <button class="btn primary" id="caseSave">Save matter</button>
+    <div class="modal-foot"><button class="btn" id="caseCancel">Cancel</button><button class="btn primary" id="caseSave">Save matter</button></div>
+  </div>
+</div>
+
+<!-- JUDGMENT MODAL -->
+<div class="overlay" id="judOverlay">
+  <div class="modal">
+    <div class="modal-head"><h3 id="judModalTitle">New judgment</h3><button class="icon-btn" id="judClose" style="border-color:var(--line);background:var(--sand);color:var(--ink)">✕</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="jId">
+      <div class="field"><label>Citation</label><input id="jCite" placeholder="e.g. PLD 2021 SC 145 / 2023 SCMR 441"></div>
+      <div class="field"><label>Case name</label><input id="jName" placeholder="e.g. State v. Khalid"></div>
+      <div class="grid2">
+        <div class="field"><label>Court</label><input id="jCourt" placeholder="e.g. Supreme Court of Pakistan"></div>
+        <div class="field"><label>Year</label><input id="jYear" type="number" placeholder="e.g. 2021"></div>
+      </div>
+      <div class="field"><label>Key point / holding</label><textarea id="jHold" placeholder="What did this case decide? Core holding and precedent…"></textarea></div>
+      <div class="field"><label>Tags (comma separated)</label><input id="jTags" placeholder="Bail, Murder, Constitutional Law"></div>
+      <div class="field"><label>Source URL</label><input id="jUrl" placeholder="optional link to the judgment"></div>
+      <div class="field"><label>Personal notes</label><textarea id="jNotes" placeholder="Why this matters to your matter, how you'll use it…"></textarea></div>
+    </div>
+    <div class="modal-foot"><button class="btn" id="judCancel">Cancel</button><button class="btn primary" id="judSave">Save judgment</button></div>
+  </div>
+</div>
+
+<!-- SUBSCRIPTION MODAL -->
+<div class="overlay" id="subOverlay">
+  <div class="modal">
+    <div class="modal-head"><h3>Subscribe to Wakalat</h3><button class="icon-btn" id="subClose" style="border-color:var(--line);background:var(--sand);color:var(--ink)">✕</button></div>
+    <div class="modal-body">
+      <p class="gate-sub" style="margin-bottom:16px">Subscribing lets you <b>save your cases &amp; judgments permanently</b>. Pick a plan, pay by Easypaisa / UPaisa / bank, then send the receipt — we unlock you the same day.</p>
+      <div class="plans" id="planPick">
+        <div class="plan on" data-plan="1m"><span class="pr">✓ Selected</span><div class="price">₨250</div><div class="per">per month</div></div>
+        <div class="plan" data-plan="6m"><span class="badge">Best value</span><span class="pr">✓ Selected</span><div class="price">₨1,000</div><div class="per">for 6 months</div><div class="save">Save ₨500</div></div>
+      </div>
+      <div class="pay-methods" id="payMethods"></div>
+      <div class="ref-box">Your reference code <b id="refCode">WK-000000</b><br><span>Write this in the payment note &amp; your message.</span></div>
+      <div class="grid2">
+        <button class="btn wa" id="waBtn">Send proof on WhatsApp</button>
+        <button class="btn" id="emailBtn">Request by email</button>
+      </div>
+      <div class="divider">After we confirm</div>
+      <div class="field"><label>Enter the unlock code we send you</label><input id="unlockInput" placeholder="Paste unlock code" style="font-family:'Spline Sans Mono',monospace;text-align:center;letter-spacing:1px"></div>
+      <button class="btn primary wide" id="unlockBtn">Unlock Wakalat</button>
+      <div class="note">Questions? Email <b>trendcatcher299@gmail.com</b></div>
     </div>
   </div>
 </div>
@@ -572,439 +543,393 @@ main{flex:1;width:100%;max-width:var(--maxw);margin:0 auto;padding:22px 18px 60p
 <div id="toast"></div>
 
 <script>
-/* ============================================================
-   WAKALAT — app logic (static, localStorage, no backend)
-   ============================================================ */
-
-/* ----- payment + admin config (EDIT THESE) ----- */
-const PAY = {
-  WHATSAPP:"923323254841",            // app WhatsApp (intl, no +)
-  EMAIL:"trendcatcher299@gmail.com",
+/* ===== config (EDIT BEFORE LAUNCH) ===== */
+const PAY={ WHATSAPP:"923323254841", EMAIL:"trendcatcher299@gmail.com",
   METHODS:[
-    {ic:"EP", c:"#3aaa35", l:"Easypaisa",          v:"0321-2736510",                  s:"Send to this number"},
-    {ic:"UP", c:"#e87722", l:"UPaisa",             v:"0332-3254841",                  s:"Send to this number"},
-    {ic:"₨",  c:"#0B5D3B", l:"Meezan Bank (IBAN)", v:"PK73MEZN0098590115082198",      s:"Bank transfer / IBFT"}
-  ]
-};
-const ADMIN_EMAIL = "trendcatcher299@gmail.com";   // only this account sees the admin panel
-const ACTIVATION_SECRET = "WAKALAT-CHANGE-ME-7731"; // change before launch; keep private
-const PLANS = { "1m":{label:"1 month",  price:"₨250",  days:30},
-                "6m":{label:"6 months", price:"₨1,000",days:182} };
+    {ic:"EP",c:"#3aaa35",l:"Easypaisa",v:"0321-2736510",s:"Send to this number"},
+    {ic:"UP",c:"#e87722",l:"UPaisa",v:"0332-3254841",s:"Send to this number"},
+    {ic:"₨",c:"#0B5D3B",l:"Meezan Bank (IBAN)",v:"PK73MEZN0098590115082198",s:"Bank transfer / IBFT"}
+  ]};
+const ADMIN_EMAIL="trendcatcher299@gmail.com";
+const ACTIVATION_SECRET="WAKALAT-CHANGE-ME-7731";   // <- change to a private random string
+const PLANS={ "1m":{label:"1 month",price:"₨250",days:30}, "6m":{label:"6 months",price:"₨1,000",days:182} };
 
-/* ----- tiny helpers ----- */
-const $ = id => document.getElementById(id);
-const esc = s => String(s==null?"":s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("on"),2400);}
-function hash32(str){let h=0x811c9dc5;for(let i=0;i<str.length;i++){h^=str.charCodeAt(i);h=Math.imul(h,0x01000193);}return (h>>>0).toString(36).toUpperCase();}
+/* ===== helpers ===== */
+const $=id=>document.getElementById(id);
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+function toast(m){const t=$("toast");t.textContent=m;t.classList.add("on");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("on"),2600);}
+function hash32(s){let h=0x811c9dc5;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,0x01000193);}return (h>>>0).toString(36).toUpperCase();}
 function todayISO(){return new Date().toISOString().slice(0,10);}
 function fmtDate(iso){if(!iso)return"—";const d=new Date(iso+"T00:00:00");return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});}
-function daysFromToday(iso){if(!iso)return null;const d=new Date(iso+"T00:00:00");const t=new Date(todayISO()+"T00:00:00");return Math.round((d-t)/86400000);}
+function daysFromToday(iso){if(!iso)return null;return Math.round((new Date(iso+"T00:00:00")-new Date(todayISO()+"T00:00:00"))/86400000);}
 
-/* ----- storage (namespaced per user) ----- */
-const DB = {
-  users(){ try{return JSON.parse(localStorage.getItem("wakalat.users")||"{}")}catch(e){return{}} },
-  saveUsers(u){ localStorage.setItem("wakalat.users",JSON.stringify(u)); },
-  session(){ return localStorage.getItem("wakalat.session")||null; },
-  setSession(e){ e?localStorage.setItem("wakalat.session",e):localStorage.removeItem("wakalat.session"); },
-  key(k){ return "wakalat."+state.email+"."+k; },
-  get(k,def){ try{const v=localStorage.getItem(DB.key(k));return v?JSON.parse(v):def}catch(e){return def} },
-  set(k,v){ localStorage.setItem(DB.key(k),JSON.stringify(v)); }
+const DB={
+  users(){try{return JSON.parse(localStorage.getItem("wakalat.users")||"{}")}catch(e){return{}}},
+  saveUsers(u){localStorage.setItem("wakalat.users",JSON.stringify(u))},
+  session(){return localStorage.getItem("wakalat.session")||null},
+  setSession(e){e?localStorage.setItem("wakalat.session",e):localStorage.removeItem("wakalat.session")},
+  key(k){return "wakalat."+state.email+"."+k},
+  get(k,def){try{const v=localStorage.getItem(DB.key(k));return v?JSON.parse(v):def}catch(e){return def}},
+  set(k,v){localStorage.setItem(DB.key(k),JSON.stringify(v))}
 };
 
-let state = { email:null, profile:null, sub:null, mine:[], client:[], calMonth:new Date() };
+let state={email:null,profile:null,sub:null,mine:[],client:[],jud:[],calMonth:new Date(),trialPopShown:false};
 
-/* ----- the seal SVG (signature mark) ----- */
+/* ===== seal ===== */
 function sealSVG(withText){
-  const ring = `<circle class="ring" cx="40" cy="40" r="37"/><circle class="ring2" cx="40" cy="40" r="32.5"/>`;
-  const scales = `
-    <g class="scale">
-      <line class="post" x1="40" y1="26" x2="40" y2="56"/>
-      <circle class="dot" cx="40" cy="24" r="2.4" stroke="none"/>
-      <line x1="24" y1="33" x2="56" y2="33"/>
-      <line x1="24" y1="33" x2="19" y2="44"/><line x1="24" y1="33" x2="29" y2="44"/><path d="M19 44a5 5 0 0 0 10 0" />
-      <line x1="56" y1="33" x2="51" y2="44"/><line x1="56" y1="33" x2="61" y2="44"/><path d="M51 44a5 5 0 0 0 10 0"/>
-      <line x1="31" y1="56" x2="49" y2="56"/>
-    </g>`;
+  const ring=`<circle class="ring" cx="40" cy="40" r="37"/><circle class="ring2" cx="40" cy="40" r="32.5"/>`;
+  const scales=`<g class="scale"><line class="post" x1="40" y1="26" x2="40" y2="56"/><circle class="dot" cx="40" cy="24" r="2.4" stroke="none"/><line x1="24" y1="33" x2="56" y2="33"/><line x1="24" y1="33" x2="19" y2="44"/><line x1="24" y1="33" x2="29" y2="44"/><path d="M19 44a5 5 0 0 0 10 0"/><line x1="56" y1="33" x2="51" y2="44"/><line x1="56" y1="33" x2="61" y2="44"/><path d="M51 44a5 5 0 0 0 10 0"/><line x1="31" y1="56" x2="49" y2="56"/></g>`;
   let text="";
-  if(withText){
-    text = `<defs><path id="sealpath" d="M40,40 m-28,0 a28,28 0 1,1 56,0 a28,28 0 1,1 -56,0"/></defs>
-      <text class="sealtext"><textPath href="#sealpath" startOffset="0%">وکالت · WAKALAT · PAKISTAN · LEGAL · </textPath></text>`;
-  }
+  if(withText){text=`<defs><path id="sp" d="M40,40 m-28,0 a28,28 0 1,1 56,0 a28,28 0 1,1 -56,0"/></defs><text class="sealtext"><textPath href="#sp" startOffset="0%">وکالت · WAKALAT · PAKISTAN · LEGAL · </textPath></text>`;}
   return ring+text+scales;
 }
-["sealAuth","sealPay","sealTop"].forEach(id=>{ if($(id)) $(id).innerHTML=sealSVG(id==="sealAuth"); });
+["sealAuth","sealTop"].forEach(id=>{if($(id))$(id).innerHTML=sealSVG(id==="sealAuth");});
 
-/* ============================================================
-   AUTH
-   ============================================================ */
-$("authTabs").addEventListener("click",e=>{
-  const b=e.target.closest("button"); if(!b)return;
+/* ===== auth ===== */
+$("authTabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
   [...$("authTabs").children].forEach(x=>x.classList.toggle("on",x===b));
   $("loginForm").classList.toggle("hidden",b.dataset.tab!=="login");
-  $("registerForm").classList.toggle("hidden",b.dataset.tab!=="register");
-});
+  $("registerForm").classList.toggle("hidden",b.dataset.tab!=="register");});
 $("toReg").onclick=()=>$("authTabs").children[1].click();
 $("toLogin").onclick=()=>$("authTabs").children[0].click();
-
+$("forgot").onclick=()=>{
+  const email=prompt("Enter your registered email or phone to reset the password in this browser:");
+  if(!email)return; const e=email.trim().toLowerCase(); const users=DB.users();
+  if(!users[e]){ toast("No account with that email/phone in this browser"); return; }
+  const np=prompt("Enter a new password (at least 6 characters):"); if(!np||np.length<6){toast("Password too short");return;}
+  users[e].pass=hash32(np+e); DB.saveUsers(users); toast("Password updated — sign in now");
+};
 $("rgBtn").onclick=()=>{
-  const name=$("rgName").value.trim(), email=$("rgEmail").value.trim().toLowerCase(), pass=$("rgPass").value;
-  if(!name||!email||pass.length<6){ toast("Fill name, email/phone and a 6+ char password"); return; }
+  const name=$("rgName").value.trim(),email=$("rgEmail").value.trim().toLowerCase(),phone=$("rgPhone").value.trim(),pass=$("rgPass").value;
+  if(!name||!email||!phone||pass.length<6){toast("Fill name, email, phone and a 6+ char password");return;}
   const users=DB.users();
-  if(users[email]){ toast("That account already exists — sign in instead"); return; }
-  users[email]={name,email,pass:hash32(pass+email),createdAt:todayISO()};
-  DB.saveUsers(users); DB.setSession(email);
-  state.email=email;
-  DB.set("profile",{fullName:name});
-  toast("Account created"); route();
+  if(users[email]){toast("That account already exists — sign in");return;}
+  users[email]={name,email,phone,pass:hash32(pass+email),createdAt:todayISO()};
+  DB.saveUsers(users);DB.setSession(email);state.email=email;
+  DB.set("profile",{fullName:name,phone});
+  toast("Welcome to Wakalat");route();
 };
 $("liBtn").onclick=()=>{
-  const email=$("liEmail").value.trim().toLowerCase(), pass=$("liPass").value;
-  const users=DB.users();
-  if(!users[email]||users[email].pass!==hash32(pass+email)){ toast("Wrong email/phone or password"); return; }
-  DB.setSession(email); state.email=email; toast("Welcome back"); route();
+  const email=$("liEmail").value.trim().toLowerCase(),pass=$("liPass").value;const users=DB.users();
+  if(!users[email]||users[email].pass!==hash32(pass+email)){toast("Wrong email/phone or password");return;}
+  DB.setSession(email);state.email=email;route();toast("Welcome back");
 };
 
-/* ============================================================
-   ROUTING — auth → profile → paywall → app
-   ============================================================ */
-function loadState(){
-  state.profile = DB.get("profile",null);
-  state.sub     = DB.get("sub",null);
-  state.mine    = DB.get("mine",[]);
-  state.client  = DB.get("client",[]);
-}
-function subActive(){ return state.sub && state.sub.expiresAt && state.sub.expiresAt>=todayISO(); }
-function showOnly(id){ ["authScreen","profileScreen","paywallScreen","appShell"].forEach(s=>$(s).classList.toggle("hidden",s!==id)); }
-
+/* ===== routing: open after profile, NO paywall gate ===== */
+function loadState(){state.profile=DB.get("profile",null);state.sub=DB.get("sub",null);state.mine=DB.get("mine",[]);state.client=DB.get("client",[]);state.jud=DB.get("jud",[]);}
+function isAdmin(){return state.email===ADMIN_EMAIL;}
+function subActive(){return state.sub&&state.sub.expiresAt&&state.sub.expiresAt>=todayISO();}
+function canSave(){return isAdmin()||subActive();}
+function showOnly(id){["authScreen","profileScreen","appShell"].forEach(s=>$(s).classList.toggle("hidden",s!==id));}
 function route(){
-  state.email = DB.session();
-  if(!state.email){ showOnly("authScreen"); return; }
+  state.email=DB.session();
+  if(!state.email){showOnly("authScreen");return;}
   loadState();
-  if(!state.profile || !state.profile.area || !state.profile.city){ openProfile(); showOnly("profileScreen"); return; }
-  if(state.email===ADMIN_EMAIL){ enterApp(); return; }   // admin has full access, no paywall
-  if(!subActive()){ openPaywall(); showOnly("paywallScreen"); return; }
+  if(!state.profile||!state.profile.area||!state.profile.city){openProfile();showOnly("profileScreen");return;}
   enterApp();
 }
 
-/* ============================================================
-   PROFILE
-   ============================================================ */
+/* ===== profile ===== */
 let pendingPhoto=null;
 function openProfile(){
   const p=state.profile||{};
-  $("pfName").value=p.fullName||""; $("pfArea").value=p.area||""; $("pfExp").value=p.exp||"";
-  $("pfCity").value=p.city||""; $("pfBar").value=p.bar||""; $("pfBio").value=p.bio||"";
-  pendingPhoto=p.photo||null; paintAvatar($("profAv"),p.fullName,p.photo);
-  $("profTitle").textContent = (p.area&&p.city)?"Edit your chambers":"Set up your chambers";
+  $("pfName").value=p.fullName||"";$("pfArea").value=p.area||"";$("pfExp").value=p.exp||"";
+  $("pfCity").value=p.city||"";$("pfBar").value=p.bar||"";
+  pendingPhoto=p.photo||null;paintAvatar($("profAv"),p.fullName,p.photo);
+  $("profTitle").textContent=(p.area&&p.city)?"Edit your chambers":"Set up your chambers";
 }
-function paintAvatar(el,name,photo){
-  if(photo){ el.style.backgroundImage=`url(${photo})`; el.style.backgroundSize="cover"; el.textContent=""; }
-  else{ el.style.backgroundImage=""; el.textContent=(name||"?").trim().charAt(0).toUpperCase()||"?"; }
-}
+function paintAvatar(el,name,photo){if(photo){el.style.backgroundImage=`url(${photo})`;el.style.backgroundSize="cover";el.textContent="";}else{el.style.backgroundImage="";el.textContent=(name||"?").trim().charAt(0).toUpperCase()||"?";}}
 $("profPhotoBtn").onclick=()=>$("profPhoto").click();
-$("profPhoto").onchange=e=>{
-  const f=e.target.files[0]; if(!f)return;
-  if(f.size>2*1024*1024){ toast("Image must be under 2 MB"); return; }
-  const r=new FileReader(); r.onload=()=>{ pendingPhoto=r.result; paintAvatar($("profAv"),$("pfName").value,pendingPhoto); }; r.readAsDataURL(f);
-};
+$("profPhoto").onchange=e=>{const f=e.target.files[0];if(!f)return;if(f.size>2*1024*1024){toast("Image must be under 2 MB");return;}const r=new FileReader();r.onload=()=>{pendingPhoto=r.result;paintAvatar($("profAv"),$("pfName").value,pendingPhoto);};r.readAsDataURL(f);};
 $("pfSave").onclick=()=>{
-  const fullName=$("pfName").value.trim(), area=$("pfArea").value, city=$("pfCity").value.trim();
-  if(!fullName||!area||!city){ toast("Name, practice area and city are required"); return; }
-  state.profile={ fullName, area, city, exp:$("pfExp").value, bar:$("pfBar").value.trim(), bio:$("pfBio").value.trim(), photo:pendingPhoto };
+  const fullName=$("pfName").value.trim(),area=$("pfArea").value,city=$("pfCity").value.trim();
+  if(!fullName||!area||!city){toast("Name, practice area and city are required");return;}
+  const prev=state.profile||{};
+  state.profile={fullName,area,city,exp:$("pfExp").value,bar:$("pfBar").value.trim(),phone:prev.phone||"",photo:pendingPhoto};
   DB.set("profile",state.profile);
-  // keep display name in the users table too
-  const users=DB.users(); if(users[state.email]){ users[state.email].name=fullName; DB.saveUsers(users); }
-  toast("Profile saved"); route();
+  const users=DB.users();if(users[state.email]){users[state.email].name=fullName;DB.saveUsers(users);}
+  toast("Profile saved");route();
 };
 $("pfSignout").onclick=signOut;
 
-/* ============================================================
-   PAYWALL
-   ============================================================ */
-let chosenPlan="1m";
-function refCode(){ return "WK-"+hash32(state.email).slice(0,6).padEnd(6,"0"); }
-function openPaywall(){
-  $("refCode").textContent=refCode();
-  // methods
-  $("payMethods").innerHTML="";
-  PAY.METHODS.forEach(m=>{
-    const row=document.createElement("div"); row.className="pm";
-    row.innerHTML=`<span class="ic" style="background:${m.c}">${esc(m.ic)}</span>
-      <span class="info"><span class="l">${esc(m.l)}</span><span class="v">${esc(m.v)}</span><span class="s">${esc(m.s)}</span></span>
-      <button class="copy">Copy</button>`;
-    row.querySelector(".copy").onclick=()=>{ navigator.clipboard?.writeText(m.v).then(()=>toast("Copied"),()=>toast(m.v)); };
-    $("payMethods").appendChild(row);
-  });
-}
-$("planPick").addEventListener("click",e=>{
-  const p=e.target.closest(".plan"); if(!p)return;
-  chosenPlan=p.dataset.plan;
-  [...$("planPick").children].forEach(x=>x.classList.toggle("on",x===p));
-});
-$("waBtn").onclick=()=>{
-  const pl=PLANS[chosenPlan];
-  const msg=`Assalam o Alaikum, I paid ${pl.price} for the Wakalat ${pl.label} plan.\n`+
-            `Name: ${state.profile?.fullName||""}\nReference: ${refCode()}\n`+
-            `Method: (Easypaisa / UPaisa / Meezan)\nReceipt attached.`;
-  window.open(`https://wa.me/${PAY.WHATSAPP}?text=${encodeURIComponent(msg)}`,"_blank","noopener");
-};
-$("unlockBtn").onclick=()=>{
-  const code=$("unlockInput").value.trim();
-  const res=verifyUnlock(code, refCode());
-  if(!res.ok){ toast(res.msg); return; }
-  state.sub={ plan:res.plan, activatedAt:todayISO(), expiresAt:res.expiresAt, code };
-  DB.set("sub",state.sub);
-  toast("Unlocked — welcome to Wakalat"); route();
-};
-$("paySignout").onclick=signOut;
-
-/* unlock token: base = ref|plan|expiry ; sig = hash(base+SECRET) ; token=BASE.SIG (uppercased) */
-function makeUnlock(ref,plan,expiresAt){
-  const base=`${ref}|${plan}|${expiresAt}`;
-  const sig=hash32(base+ACTIVATION_SECRET);
-  return btoa(base).replace(/=/g,"")+"."+sig;
-}
-function verifyUnlock(token,ref){
-  try{
-    const [b64,sig]=token.split(".");
-    if(!b64||!sig) return {ok:false,msg:"That code looks incomplete"};
-    const base=atob(b64);
-    if(hash32(base+ACTIVATION_SECRET)!==sig) return {ok:false,msg:"Invalid unlock code"};
-    const [r,plan,expiresAt]=base.split("|");
-    if(r!==ref) return {ok:false,msg:"This code was issued for a different account"};
-    if(expiresAt<todayISO()) return {ok:false,msg:"This code has already expired"};
-    return {ok:true,plan,expiresAt};
-  }catch(e){ return {ok:false,msg:"Could not read that code"}; }
-}
-
-/* ============================================================
-   APP
-   ============================================================ */
+/* ===== app ===== */
 function enterApp(){
   showOnly("appShell");
   paintAvatar($("chipAv"),state.profile.fullName,state.profile.photo);
   $("chipName").textContent=(state.profile.fullName||"You").split(" ").slice(0,2).join(" ");
-  $("adminPanel").style.display = (state.email===ADMIN_EMAIL)?"block":"none";
+  $("adminPanel").style.display=isAdmin()?"block":"none";
+  const showSub=!canSave();
+  $("subBtn").style.display=showSub?"inline-flex":"none";
+  $("trialBanner").classList.toggle("hidden",!showSub);
+  const k=localStorage.getItem("gemini_api_key");if(k)$("aiKey").value=k;
   renderAll();
 }
-function renderAll(){ renderAlerts(); renderCases("mine"); renderCases("client"); renderCalendar(); renderSettings(); }
+function renderAll(){renderAlerts();renderCases("mine");renderCases("client");renderJud();renderCalendar();renderSettings();}
 
-/* tabs */
-$("tabbar").addEventListener("click",e=>{
-  const b=e.target.closest("button"); if(!b)return;
+$("tabbar").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;
   [...$("tabbar").children].forEach(x=>x.classList.toggle("on",x===b));
-  ["vAlerts","vMine","vClient","vCal","vSettings"].forEach(v=>$(v).classList.toggle("on",v===b.dataset.view));
-});
-$("userChip").onclick=()=>$("tabbar").querySelector('[data-view="vSettings"]').click();
-$("themeBtn").onclick=()=>{
-  const cur=document.documentElement.getAttribute("data-theme")==="dark"?"":"dark";
-  document.documentElement.setAttribute("data-theme",cur);
-  localStorage.setItem("wakalat.theme",cur);
-};
+  ["vAlerts","vMine","vClient","vJud","vCal","vSettings"].forEach(v=>$(v).classList.toggle("on",v===b.dataset.view));});
+function gotoTab(view){$("tabbar").querySelector(`[data-view="${view}"]`).click();}
+$("userChip").onclick=()=>gotoTab("vSettings");
+$("themeBtn").onclick=()=>{const c=document.documentElement.getAttribute("data-theme")==="dark"?"":"dark";document.documentElement.setAttribute("data-theme",c);localStorage.setItem("wakalat.theme",c);};
 
-/* ----- alerts ----- */
+/* commit: only persist when subscribed/admin; otherwise keep in memory (trial) */
+function commit(which){
+  if(which==="mine")  { if(canSave())DB.set("mine",state.mine); }
+  if(which==="client"){ if(canSave())DB.set("client",state.client); }
+  if(which==="jud")   { if(canSave())DB.set("jud",state.jud); }
+}
+function afterTrialSave(){
+  if(canSave()){toast("Saved");return;}
+  if(!state.trialPopShown){state.trialPopShown=true;openSub();toast("Looks good? Subscribe to keep your work.");}
+  else toast("Added (trial — not saved yet)");
+}
+
+/* ===== alerts ===== */
 function renderAlerts(){
   const all=[];
-  state.mine.forEach(c=>{ if(c.status==="Active"&&c.next){ const d=daysFromToday(c.next); if(d!==null&&d>=0&&d<=14) all.push({d,title:c.title,court:c.court,iso:c.next,kind:"mine"}); }});
-  state.client.forEach(c=>{ if(c.status==="Active"&&c.next){ const d=daysFromToday(c.next); if(d!==null&&d>=0&&d<=14) all.push({d,title:c.title,court:c.court,iso:c.next,kind:"client"}); }});
-  all.sort((a,b)=>a.d-b.d);
-
-  // stats
+  const collect=(arr,kind)=>arr.forEach(c=>{if(c.status==="Active"&&c.next){const d=daysFromToday(c.next);if(d!==null&&d>=0&&d<=14)all.push({d,title:c.title,court:c.court,iso:c.next,kind});}});
+  collect(state.mine,"mine");collect(state.client,"client");all.sort((a,b)=>a.d-b.d);
   const allCases=[...state.mine,...state.client];
   const active=allCases.filter(c=>c.status==="Active").length;
-  const hold=allCases.filter(c=>c.status==="Hold").length;
   const overdue=allCases.filter(c=>c.status==="Active"&&c.next&&daysFromToday(c.next)<0).length;
-  $("statRow").innerHTML=`
-    <div class="stat"><div class="n">${allCases.length}</div><div class="l">Total cases</div></div>
+  $("statRow").innerHTML=`<div class="stat"><div class="n">${allCases.length}</div><div class="l">Total cases</div></div>
     <div class="stat"><div class="n">${active}</div><div class="l">Active</div></div>
     <div class="stat"><div class="n">${all.length}</div><div class="l">Hearings ≤ 14 days</div></div>
     <div class="stat alert"><div class="n">${overdue}</div><div class="l">Overdue dates</div></div>`;
-
-  if(!all.length){
-    $("alertList").innerHTML=`<div class="empty"><svg class="seal" width="70" height="70" viewBox="0 0 80 80">${sealSVG(false)}</svg><h3>No hearings in the next two weeks</h3><p>Add a next-hearing (پیشی) date to any active matter and it will appear here, nearest first.</p></div>`;
-    $("alertPill").classList.add("hidden"); return;
-  }
-  $("alertPill").textContent=all.length; $("alertPill").classList.remove("hidden");
-  $("alertList").innerHTML=all.map(a=>{
-    const urgent=a.d<=3;
-    const when=a.d===0?"Today":a.d===1?"Tom’w":a.d+"d";
-    return `<div class="alert ${urgent?'urgent':''}">
-      <div class="when"><div class="d">${a.d===0?'•':a.d}</div><div class="m">${a.d===0?'today':a.d===1?'day':'days'}</div></div>
-      <div class="body"><div class="t">${esc(a.title)}</div><div class="meta">${esc(a.court||'Court not set')} · ${fmtDate(a.iso)}</div></div>
-      <span class="tag ${a.kind}">${a.kind==='mine'?'My case':'Client'}</span>
-    </div>`;
-  }).join("");
+  if(!all.length){$("alertList").innerHTML=`<div class="empty"><svg class="seal" width="70" height="70" viewBox="0 0 80 80">${sealSVG(false)}</svg><h3>No hearings in the next two weeks</h3><p>Add a next-hearing (پیشی) date to any active matter and it appears here, nearest first.</p></div>`;$("alertPill").classList.add("hidden");return;}
+  $("alertPill").textContent=all.length;$("alertPill").classList.remove("hidden");
+  $("alertList").innerHTML=all.map(a=>`<div class="alert ${a.d<=3?'urgent':''}"><div class="when"><div class="d">${a.d===0?'•':a.d}</div><div class="m">${a.d===0?'today':a.d===1?'day':'days'}</div></div><div class="body"><div class="t">${esc(a.title)}</div><div class="meta">${esc(a.court||'Court not set')} · ${fmtDate(a.iso)}</div></div><span class="tag ${a.kind}">${a.kind==='mine'?'My case':'Client'}</span></div>`).join("");
 }
 
-/* ----- cases ----- */
+/* ===== cases ===== */
 function renderCases(kind){
-  const list = kind==="mine"?state.mine:state.client;
-  const box = $(kind==="mine"?"mineList":"clientList");
-  const q = $(kind==="mine"?"mineSearch":"clientSearch").value.toLowerCase();
-  const f = $(kind==="mine"?"mineFilter":"clientFilter").value;
-  const rows = list.filter(c=>{
-    const text=(c.title+" "+(c.court||"")+" "+(c.party||"")+" "+(c.client||"")+" "+(c.counsel||"")).toLowerCase();
-    return text.includes(q) && (f==="ALL"||c.status===f);
-  });
-  if(!rows.length){
-    box.innerHTML=`<div class="empty" style="grid-column:1/-1"><svg class="seal" width="70" height="70" viewBox="0 0 80 80">${sealSVG(false)}</svg><h3>${list.length?'Nothing matches that filter':'No cases yet'}</h3><p>${list.length?'Try clearing the search or status filter.':'Add your first matter to start tracking hearings and notes.'}</p>${list.length?'':`<button class="btn primary" onclick="document.getElementById('${kind==='mine'?'addMine':'addClient'}').click()">＋ New ${kind==='mine'?'matter':'client case'}</button>`}</div>`;
-    return;
-  }
+  const list=kind==="mine"?state.mine:state.client;
+  const box=$(kind==="mine"?"mineList":"clientList");
+  const q=$(kind==="mine"?"mineSearch":"clientSearch").value.toLowerCase();
+  const f=$(kind==="mine"?"mineFilter":"clientFilter").value;
+  const rows=list.filter(c=>{const t=(c.title+" "+(c.court||"")+" "+(c.party||"")+" "+(c.client||"")+" "+(c.counsel||"")+" "+(c.notes||"")).toLowerCase();return t.includes(q)&&(f==="ALL"||c.status===f);});
+  if(!rows.length){box.innerHTML=`<div class="empty" style="grid-column:1/-1"><svg class="seal" width="70" height="70" viewBox="0 0 80 80">${sealSVG(false)}</svg><h3>${list.length?'Nothing matches that filter':'No cases yet'}</h3><p>${list.length?'Try clearing the search or status filter.':'Add your first matter to start tracking hearings and notes.'}</p>${list.length?'':`<button class="btn primary" onclick="document.getElementById('${kind==='mine'?'addMine':'addClient'}').click()">＋ New ${kind==='mine'?'matter':'client case'}</button>`}</div>`;return;}
   box.innerHTML=rows.map(c=>{
     const d=c.next?daysFromToday(c.next):null;
-    const nextHtml = c.next && c.status==="Active"
-      ? `<div class="next ${d<0?'due':''}">Next hearing: ${fmtDate(c.next)}${d!=null?` · ${d<0?Math.abs(d)+'d overdue':d===0?'today':d+'d away'}`:''}</div>` : "";
-    const who = kind==="client" && c.client ? `<span>👤 ${esc(c.client)}</span>`:"";
-    return `<div class="case">
-      <div class="top"><div class="name">${esc(c.title)}</div><span class="st ${c.status.toLowerCase()}">${c.status}</span></div>
-      <div class="meta">
-        ${c.court?`<span>⚖︎ ${esc(c.court)}</span>`:""}
-        ${c.number?`<span># ${esc(c.number)}</span>`:""}
-        ${who}
-        ${c.party?`<span>vs ${esc(c.party)}</span>`:""}
-      </div>
-      ${nextHtml}
-      ${c.notes?`<div class="rem">${esc(c.notes)}</div>`:""}
-      <div class="acts">
-        <button class="btn sm" onclick="editCase('${kind}','${c.id}')">Edit</button>
-        <button class="btn sm" onclick="delCase('${kind}','${c.id}')" style="color:var(--red);border-color:var(--line)">Delete</button>
-      </div>
-    </div>`;
+    const nextHtml=c.next&&c.status==="Active"?`<div class="next ${d<0?'due':''}">Next hearing: ${fmtDate(c.next)}${d!=null?` · ${d<0?Math.abs(d)+'d overdue':d===0?'today':d+'d away'}`:''}</div>`:"";
+    const who=kind==="client"&&c.client?`<span>👤 ${esc(c.client)}</span>`:"";
+    return `<div class="case"><div class="top"><div class="name">${esc(c.title)}</div><span class="st ${c.status.toLowerCase()}">${c.status}</span></div><div class="meta">${c.court?`<span>⚖︎ ${esc(c.court)}</span>`:""}${c.number?`<span># ${esc(c.number)}</span>`:""}${who}${c.party?`<span>vs ${esc(c.party)}</span>`:""}</div>${nextHtml}${c.notes?`<div class="rem">${esc(c.notes)}</div>`:""}<div class="acts"><button class="btn sm" onclick="editCase('${kind}','${c.id}')">Edit</button><button class="btn sm" onclick="delCase('${kind}','${c.id}')" style="color:var(--red)">Delete</button></div></div>`;
   }).join("");
 }
 ["mineSearch","mineFilter"].forEach(id=>$(id).addEventListener("input",()=>renderCases("mine")));
 ["clientSearch","clientFilter"].forEach(id=>$(id).addEventListener("input",()=>renderCases("client")));
 
-/* ----- case modal ----- */
 function openCase(kind,c){
-  $("cKind").value=kind; $("cId").value=c?.id||"";
-  $("caseModalTitle").textContent = c ? "Edit matter" : (kind==="mine"?"New matter":"New client case");
-  $("clientOnly").style.display = kind==="client" ? "grid" : "none";
-  $("cTitle").value=c?.title||""; $("cStatus").value=c?.status||"Active"; $("cCourt").value=c?.court||"";
-  $("cNumber").value=c?.number||""; $("cParty").value=c?.party||"";
-  $("cClient").value=c?.client||""; $("cCounsel").value=c?.counsel||"";
-  $("cOpened").value=c?.opened||""; $("cNext").value=c?.next||""; $("cNotes").value=c?.notes||"";
+  $("cKind").value=kind;$("cId").value=c?.id||"";
+  $("caseModalTitle").textContent=c?"Edit matter":(kind==="mine"?"New matter":"New client case");
+  $("clientOnly").style.display=kind==="client"?"grid":"none";
+  $("cTitle").value=c?.title||"";$("cStatus").value=c?.status||"Active";$("cCourt").value=c?.court||"";
+  $("cNumber").value=c?.number||"";$("cParty").value=c?.party||"";$("cClient").value=c?.client||"";$("cCounsel").value=c?.counsel||"";
+  $("cOpened").value=c?.opened||"";$("cNext").value=c?.next||"";$("cNotes").value=c?.notes||"";
   $("caseOverlay").classList.add("on");
 }
-function closeCase(){ $("caseOverlay").classList.remove("on"); }
+const closeCase=()=>$("caseOverlay").classList.remove("on");
 $("addMine").onclick=()=>openCase("mine",null);
 $("addClient").onclick=()=>openCase("client",null);
-$("caseClose").onclick=closeCase; $("caseCancel").onclick=closeCase;
-$("caseOverlay").addEventListener("click",e=>{ if(e.target===$("caseOverlay")) closeCase(); });
+$("caseClose").onclick=closeCase;$("caseCancel").onclick=closeCase;
+$("caseOverlay").addEventListener("click",e=>{if(e.target===$("caseOverlay"))closeCase();});
 $("caseSave").onclick=()=>{
-  const kind=$("cKind").value; const title=$("cTitle").value.trim();
-  if(!title){ toast("Give the matter a title"); return; }
-  const obj={
-    id:$("cId").value||("c"+Date.now()),
-    title, status:$("cStatus").value, court:$("cCourt").value,
-    number:$("cNumber").value.trim(), party:$("cParty").value.trim(),
-    client:$("cClient").value.trim(), counsel:$("cCounsel").value.trim(),
-    opened:$("cOpened").value, next:$("cNext").value, notes:$("cNotes").value.trim()
-  };
-  const arr = kind==="mine"?state.mine:state.client;
-  const i=arr.findIndex(x=>x.id===obj.id);
-  if(i>=0) arr[i]=obj; else arr.unshift(obj);
-  DB.set(kind==="mine"?"mine":"client",arr);
-  closeCase(); renderAll(); toast("Saved");
+  const kind=$("cKind").value,title=$("cTitle").value.trim();
+  if(!title){toast("Give the matter a title");return;}
+  const obj={id:$("cId").value||("c"+Date.now()),title,status:$("cStatus").value,court:$("cCourt").value,number:$("cNumber").value.trim(),party:$("cParty").value.trim(),client:$("cClient").value.trim(),counsel:$("cCounsel").value.trim(),opened:$("cOpened").value,next:$("cNext").value,notes:$("cNotes").value.trim()};
+  const arr=kind==="mine"?state.mine:state.client;const i=arr.findIndex(x=>x.id===obj.id);
+  if(i>=0)arr[i]=obj;else arr.unshift(obj);
+  commit(kind);closeCase();renderAll();afterTrialSave();
 };
-window.editCase=(kind,id)=>{ const arr=kind==="mine"?state.mine:state.client; openCase(kind,arr.find(c=>c.id===id)); };
-window.delCase=(kind,id)=>{
-  if(!confirm("Delete this case? This cannot be undone.")) return;
-  if(kind==="mine"){ state.mine=state.mine.filter(c=>c.id!==id); DB.set("mine",state.mine); }
-  else{ state.client=state.client.filter(c=>c.id!==id); DB.set("client",state.client); }
-  renderAll(); toast("Deleted");
-};
+window.editCase=(kind,id)=>{const arr=kind==="mine"?state.mine:state.client;openCase(kind,arr.find(c=>c.id===id));};
+window.delCase=(kind,id)=>{if(!confirm("Delete this case?"))return;if(kind==="mine"){state.mine=state.mine.filter(c=>c.id!==id);commit("mine");}else{state.client=state.client.filter(c=>c.id!==id);commit("client");}renderAll();toast("Deleted");};
+$("fab").onclick=()=>{const v=$("tabbar").querySelector("button.on").dataset.view;if(v==="vJud")openJud(null);else openCase(v==="vClient"?"client":"mine",null);};
 
-/* fab → quick add to whichever tab is active (defaults to my cases) */
-$("fab").onclick=()=>{
-  const active=$("tabbar").querySelector("button.on").dataset.view;
-  openCase(active==="vClient"?"client":"mine",null);
+/* ===== judgments ===== */
+function renderJud(){
+  const q=$("judSearch").value.toLowerCase();
+  const rows=state.jud.filter(j=>(`${j.citation} ${j.caseName} ${j.court} ${j.year} ${j.keyPoint} ${j.notes} ${(j.tags||[]).join(" ")}`).toLowerCase().includes(q));
+  const box=$("judList");
+  if(!rows.length){box.innerHTML=`<div class="empty"><svg class="seal" width="70" height="70" viewBox="0 0 80 80">${sealSVG(false)}</svg><h3>${state.jud.length?'Nothing matches that filter':'No judgments saved yet'}</h3><p>${state.jud.length?'Try a different keyword.':'Paste a judgment into the AI box above to auto-fill one, or add it manually.'}</p></div>`;return;}
+  box.innerHTML=rows.map(j=>`<div class="jcard"><div class="cite">${esc(j.citation||'No citation')}</div><div class="cn">${esc(j.caseName||'Untitled')}</div><div class="jm">${esc(j.court||'')}${j.year?` · ${esc(j.year)}`:''}</div>${j.keyPoint?`<div class="hold">${esc(j.keyPoint)}</div>`:''}${j.notes?`<div class="rem" style="margin-top:8px">${esc(j.notes)}</div>`:''}${(j.tags&&j.tags.length)?`<div class="jtags">${j.tags.map(t=>`<span class="jtag">${esc(t)}</span>`).join("")}</div>`:''}<div class="acts">${j.sourceUrl?`<a class="btn sm" href="${esc(j.sourceUrl)}" target="_blank" rel="noopener">Open source</a>`:''}<button class="btn sm" onclick="editJud('${j.id}')">Edit</button><button class="btn sm" onclick="delJud('${j.id}')" style="color:var(--red)">Delete</button></div></div>`).join("");
+}
+$("judSearch").addEventListener("input",renderJud);
+function openJud(j){
+  $("jId").value=j?.id||"";$("judModalTitle").textContent=j?"Edit judgment":"New judgment";
+  $("jCite").value=j?.citation||"";$("jName").value=j?.caseName||"";$("jCourt").value=j?.court||"";$("jYear").value=j?.year||"";
+  $("jHold").value=j?.keyPoint||"";$("jTags").value=(j?.tags||[]).join(", ");$("jUrl").value=j?.sourceUrl||"";$("jNotes").value=j?.notes||"";
+  $("judOverlay").classList.add("on");
+}
+const closeJud=()=>$("judOverlay").classList.remove("on");
+$("addJud").onclick=()=>openJud(null);$("judClose").onclick=closeJud;$("judCancel").onclick=closeJud;
+$("judOverlay").addEventListener("click",e=>{if(e.target===$("judOverlay"))closeJud();});
+$("judSave").onclick=()=>{
+  const name=$("jName").value.trim(),cite=$("jCite").value.trim();
+  if(!name&&!cite){toast("Add at least a case name or citation");return;}
+  const obj={id:$("jId").value||("j"+Date.now()),citation:cite,caseName:name,court:$("jCourt").value.trim(),year:$("jYear").value.trim(),keyPoint:$("jHold").value.trim(),notes:$("jNotes").value.trim(),sourceUrl:$("jUrl").value.trim(),tags:$("jTags").value.split(",").map(t=>t.trim()).filter(Boolean)};
+  const i=state.jud.findIndex(x=>x.id===obj.id);if(i>=0)state.jud[i]=obj;else state.jud.unshift(obj);
+  commit("jud");closeJud();renderJud();afterTrialSave();
 };
+window.editJud=id=>openJud(state.jud.find(j=>j.id===id));
+window.delJud=id=>{if(!confirm("Delete this judgment?"))return;state.jud=state.jud.filter(j=>j.id!==id);commit("jud");renderJud();toast("Deleted");};
 
-/* ----- calendar ----- */
-$("calPrev").onclick=()=>{ state.calMonth.setMonth(state.calMonth.getMonth()-1); renderCalendar(); };
-$("calNext").onclick=()=>{ state.calMonth.setMonth(state.calMonth.getMonth()+1); renderCalendar(); };
-function renderCalendar(){
-  const y=state.calMonth.getFullYear(), m=state.calMonth.getMonth();
-  $("calLabel").textContent=new Date(y,m,1).toLocaleDateString('en-GB',{month:'long',year:'numeric'});
-  const first=new Date(y,m,1).getDay(); const dim=new Date(y,m+1,0).getDate();
-  const events={};
-  const add=(c,mine)=>{ if(c.next){ (events[c.next]=events[c.next]||[]).push({t:c.title,mine}); } };
-  state.mine.forEach(c=>add(c,true)); state.client.forEach(c=>add(c,false));
-  const dows=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
-  let html=dows.map(d=>`<div class="cal-dow">${d}</div>`).join("");
-  for(let i=0;i<first;i++) html+=`<div class="cal-day out"></div>`;
-  for(let day=1;day<=dim;day++){
-    const iso=`${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;
-    const isToday=iso===todayISO();
-    const evs=(events[iso]||[]).map(e=>`<div class="cal-ev ${e.mine?'mine':''}" title="${esc(e.t)}">${esc(e.t)}</div>`).join("");
-    html+=`<div class="cal-day ${isToday?'today':''}"><div class="dn">${day}</div>${evs}</div>`;
+/* web legal search (Google dorks) */
+$("searchChips").addEventListener("click",e=>{const c=e.target.closest(".chip");if(!c)return;[...$("searchChips").children].forEach(x=>x.classList.toggle("on",x===c));});
+function runWebSearch(){
+  const q=$("webQuery").value.trim();if(!q){toast("Type something to search");return;}
+  const preset=$("searchChips").querySelector(".chip.on").dataset.preset;
+  let dq;
+  switch(preset){
+    case"sc":dq=`site:supremecourt.gov.pk OR site:pakistanlawsite.com OR site:pakistanlawjournal.com "${q}" judgment`;break;
+    case"hc":dq=`(site:peshawarhighcourt.gov.pk OR site:lhc.gov.pk OR site:sindhhighcourt.gov.pk OR site:bhc.gov.pk) "${q}" judgment`;break;
+    case"india":dq=`site:indiankanoon.org OR site:sci.gov.in "${q}" judgment`;break;
+    case"pdf":dq=`"${q}" judgment filetype:pdf`;break;
+    default:dq=`"${q}" judgment OR "case law"`;
   }
+  window.open(`https://www.google.com/search?q=${encodeURIComponent(dq)}`,"_blank","noopener");
+  toast("Opened Google legal search in a new tab");
+}
+$("webGo").onclick=runWebSearch;
+$("webQuery").addEventListener("keydown",e=>{if(e.key==="Enter")runWebSearch();});
+
+/* AI auto-fill via Gemini 2.5 Flash */
+$("aiKey").addEventListener("change",()=>{const k=$("aiKey").value.trim();if(k)localStorage.setItem("gemini_api_key",k);else localStorage.removeItem("gemini_api_key");});
+$("aiRun").onclick=runAI;
+async function runAI(){
+  const key=$("aiKey").value.trim();
+  if(!key){toast("Paste your Gemini API key first");return;}
+  let content=$("aiText").value.trim();
+  if(!content){toast("Paste judgment text or a URL");return;}
+  $("aiRun").disabled=true;$("aiRun").textContent="✦ Working…";
+  try{
+    if(/^https?:\/\/\S+$/.test(content)){
+      toast("Fetching the link…");
+      try{const r=await fetch(content);content=(await r.text()).replace(/<[^>]+>/g," ").replace(/\s+/g," ").slice(0,12000);}
+      catch(e){throw new Error("Could not fetch that URL (the site blocks it). Please paste the judgment text instead.");}
+    }
+    const prompt=`You are a legal document parser. Read the judgment excerpt and return ONLY a valid JSON object:
+{"citation":"e.g. PLD 2021 SC 145 or 2023 SCMR 441, else \\"\\"","caseName":"parties, concise","court":"deciding court","year":2021,"keyPointHolding":"2-4 sentences on what it decided and the precedent","tags":["legal","subjects","like","Bail","Murder"]}
+JUDGMENT:
+"""${content.slice(0,12000)}"""`;
+    const ep=`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(key)}`;
+    const res=await fetch(ep,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{responseMimeType:"application/json"}})});
+    if(!res.ok){const ed=await res.json().catch(()=>({}));throw new Error(ed.error?.message||"API request failed");}
+    const data=await res.json();
+    const txt=data.candidates?.[0]?.content?.parts?.[0]?.text||"{}";
+    const p=JSON.parse(txt);
+    openJud(null);
+    $("jCite").value=p.citation||"";$("jName").value=p.caseName||"";$("jCourt").value=p.court||"";
+    $("jYear").value=p.year||"";$("jHold").value=p.keyPointHolding||"";
+    $("jTags").value=Array.isArray(p.tags)?p.tags.join(", "):"";
+    if(/^https?:\/\/\S+$/.test($("aiText").value.trim()))$("jUrl").value=$("aiText").value.trim();
+    toast("AI filled the judgment — review and save");
+  }catch(err){toast(err.message||"AI extraction failed");}
+  finally{$("aiRun").disabled=false;$("aiRun").textContent="✦ Auto-fill a new judgment";}
+}
+
+/* ===== global search (Ctrl+F across everything) ===== */
+$("globalSearch").addEventListener("keydown",e=>{if(e.key==="Enter")runGlobal();});
+$("globalSearch").addEventListener("input",()=>{if($("globalSearch").value.trim().length>=2)runGlobal();else closeOverlayById("globalOverlay");});
+function runGlobal(){
+  const q=$("globalSearch").value.trim().toLowerCase();if(!q)return;
+  const res=[];
+  state.mine.forEach(c=>{if((`${c.title} ${c.court} ${c.party} ${c.number} ${c.notes}`).toLowerCase().includes(q))res.push({kind:"My case",title:c.title,meta:`${c.status} · ${c.court||'court n/a'}`,view:"vMine"});});
+  state.client.forEach(c=>{if((`${c.title} ${c.court} ${c.client} ${c.counsel} ${c.party} ${c.number} ${c.notes}`).toLowerCase().includes(q))res.push({kind:"Client case",title:c.title,meta:`${c.status} · ${c.client||'client n/a'}`,view:"vClient"});});
+  state.jud.forEach(j=>{if((`${j.citation} ${j.caseName} ${j.court} ${j.year} ${j.keyPoint} ${j.notes} ${(j.tags||[]).join(" ")}`).toLowerCase().includes(q))res.push({kind:"Judgment",title:j.caseName||j.citation,meta:`${j.citation||''} ${j.court||''}`.trim(),view:"vJud"});});
+  showGlobal(q,res);
+}
+function showGlobal(q,res){
+  let ov=$("globalOverlay");
+  if(!ov){ov=document.createElement("div");ov.className="overlay";ov.id="globalOverlay";
+    ov.innerHTML=`<div class="modal"><div class="modal-head"><h3>Search results</h3><button class="icon-btn" id="globalClose" style="border-color:var(--line);background:var(--sand);color:var(--ink)">✕</button></div><div class="modal-body" id="globalBody"></div></div>`;
+    document.body.appendChild(ov);
+    ov.addEventListener("click",e=>{if(e.target===ov)closeOverlayById("globalOverlay");});
+    $("globalClose").onclick=()=>closeOverlayById("globalOverlay");
+  }
+  $("globalBody").innerHTML = res.length
+    ? `<p class="note" style="text-align:left;margin:0 0 12px">${res.length} match${res.length>1?'es':''} for “${esc(q)}” across all your records.</p>`+res.map((r,i)=>`<button class="sr-item" data-view="${r.view}"><span class="sr-kind">${r.kind}</span><div class="sr-title">${esc(r.title||'Untitled')}</div><div class="sr-meta">${esc(r.meta)}</div></button>`).join("")
+    : `<div class="empty" style="padding:30px"><h3>No matches</h3><p>Nothing in your cases or judgments matches “${esc(q)}”.</p></div>`;
+  $("globalBody").querySelectorAll(".sr-item").forEach(b=>b.onclick=()=>{closeOverlayById("globalOverlay");gotoTab(b.dataset.view);});
+  ov.classList.add("on");
+}
+function closeOverlayById(id){const o=$(id);if(o)o.classList.remove("on");}
+
+/* ===== calendar ===== */
+$("calPrev").onclick=()=>{state.calMonth.setMonth(state.calMonth.getMonth()-1);renderCalendar();};
+$("calNext").onclick=()=>{state.calMonth.setMonth(state.calMonth.getMonth()+1);renderCalendar();};
+function renderCalendar(){
+  const y=state.calMonth.getFullYear(),m=state.calMonth.getMonth();
+  $("calLabel").textContent=new Date(y,m,1).toLocaleDateString('en-GB',{month:'long',year:'numeric'});
+  const first=new Date(y,m,1).getDay(),dim=new Date(y,m+1,0).getDate(),events={};
+  const add=(c,mine)=>{if(c.next)(events[c.next]=events[c.next]||[]).push({t:c.title,mine});};
+  state.mine.forEach(c=>add(c,true));state.client.forEach(c=>add(c,false));
+  let html=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].map(d=>`<div class="cal-dow">${d}</div>`).join("");
+  for(let i=0;i<first;i++)html+=`<div class="cal-day out"></div>`;
+  for(let day=1;day<=dim;day++){const iso=`${y}-${String(m+1).padStart(2,'0')}-${String(day).padStart(2,'0')}`;const evs=(events[iso]||[]).map(e=>`<div class="cal-ev ${e.mine?'mine':''}" title="${esc(e.t)}">${esc(e.t)}</div>`).join("");html+=`<div class="cal-day ${iso===todayISO()?'today':''}"><div class="dn">${day}</div>${evs}</div>`;}
   $("calGrid").innerHTML=html;
 }
 
-/* ----- settings ----- */
+/* ===== settings ===== */
 function renderSettings(){
   const p=state.profile||{};
-  $("setName").textContent=p.fullName||"—";
-  $("setArea").textContent=p.area||"—";
-  $("setCity").textContent=p.city||"—";
-  $("setExp").textContent=p.exp?`${p.exp} yr`:"—";
-  const isAdmin = state.email===ADMIN_EMAIL;
-  const ok = isAdmin || subActive();
-  $("setSubStatus").innerHTML=ok?`<span class="sub-status ok">● ${isAdmin?'Admin · full access':'Active'}</span>`:`<span class="sub-status exp">● Expired</span>`;
-  $("setSubPlan").textContent=isAdmin?"Owner":(state.sub?(PLANS[state.sub.plan]?.label||state.sub.plan):"—");
-  $("setSubExp").textContent=isAdmin?"—":(state.sub?fmtDate(state.sub.expiresAt):"—");
+  $("setName").textContent=p.fullName||"—";$("setArea").textContent=p.area||"—";$("setCity").textContent=p.city||"—";$("setPhone").textContent=p.phone||"—";
+  const admin=isAdmin(),ok=admin||subActive();
+  $("setSubStatus").innerHTML=ok?`<span class="sub-status ok">● ${admin?'Admin · full access':'Active'}</span>`:`<span class="sub-status exp">● Free / trial</span>`;
+  $("setSubPlan").textContent=admin?"Owner":(state.sub?(PLANS[state.sub.plan]?.label||state.sub.plan):"—");
+  $("setSubExp").textContent=admin?"—":(state.sub?fmtDate(state.sub.expiresAt):"—");
   $("setSubRef").textContent=refCode();
+  $("setSubBtn").style.display=ok?"none":"inline-flex";
 }
-$("editProfile").onclick=()=>{ openProfile(); showOnly("profileScreen"); };
-$("exportData").onclick=()=>{
-  const dump={ profile:state.profile, sub:state.sub, mine:state.mine, client:state.client, exportedAt:new Date().toISOString() };
-  const blob=new Blob([JSON.stringify(dump,null,2)],{type:"application/json"});
-  const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=`wakalat-backup-${todayISO()}.json`; a.click();
-  toast("Backup downloaded");
-};
+$("editProfile").onclick=()=>{openProfile();showOnly("profileScreen");};
+$("exportData").onclick=()=>{const dump={profile:state.profile,sub:state.sub,mine:state.mine,client:state.client,jud:state.jud,exportedAt:new Date().toISOString()};const b=new Blob([JSON.stringify(dump,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=`wakalat-backup-${todayISO()}.json`;a.click();toast("Backup downloaded");};
 $("importBtn").onclick=()=>$("importFile").click();
-$("importFile").onchange=e=>{
-  const f=e.target.files[0]; if(!f)return;
-  const r=new FileReader();
-  r.onload=()=>{ try{
-    const d=JSON.parse(r.result);
-    if(d.profile){state.profile=d.profile;DB.set("profile",d.profile);}
-    if(d.mine){state.mine=d.mine;DB.set("mine",d.mine);}
-    if(d.client){state.client=d.client;DB.set("client",d.client);}
-    if(d.sub){state.sub=d.sub;DB.set("sub",d.sub);}
-    renderAll(); toast("Backup restored");
-  }catch(err){ toast("That file could not be read"); } };
-  r.readAsText(f);
-};
+$("importFile").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(d.profile){state.profile=d.profile;DB.set("profile",d.profile);}if(d.mine){state.mine=d.mine;commit("mine");}if(d.client){state.client=d.client;commit("client");}if(d.jud){state.jud=d.jud;commit("jud");}if(d.sub){state.sub=d.sub;DB.set("sub",d.sub);}enterApp();toast("Backup restored");}catch(err){toast("That file could not be read");}};r.readAsText(f);};
 $("signoutBtn").onclick=signOut;
-$("deleteAcct").onclick=()=>{
-  if(prompt('Type DELETE to permanently remove this account and all its cases:')!=="DELETE") return;
-  ["profile","sub","mine","client"].forEach(k=>localStorage.removeItem(DB.key(k)));
-  const users=DB.users(); delete users[state.email]; DB.saveUsers(users);
-  DB.setSession(null); state.email=null; toast("Account deleted"); route();
-};
+$("deleteAcct").onclick=()=>{if(prompt('Type DELETE to permanently remove this account and all its data:')!=="DELETE")return;["profile","sub","mine","client","jud"].forEach(k=>localStorage.removeItem(DB.key(k)));const u=DB.users();delete u[state.email];DB.saveUsers(u);DB.setSession(null);state.email=null;toast("Account deleted");route();};
 
-/* admin: generate unlock code */
+/* ===== subscription modal ===== */
+let chosenPlan="1m";
+function refCode(){return "WK-"+hash32(state.email||"x").slice(0,6).padEnd(6,"0");}
+function openSub(){
+  $("refCode").textContent=refCode();
+  $("payMethods").innerHTML="";
+  PAY.METHODS.forEach(m=>{const row=document.createElement("div");row.className="pm";row.innerHTML=`<span class="ic" style="background:${m.c}">${esc(m.ic)}</span><span class="info"><span class="l">${esc(m.l)}</span><span class="v">${esc(m.v)}</span><span class="s">${esc(m.s)}</span></span><button class="copy">Copy</button>`;row.querySelector(".copy").onclick=()=>{navigator.clipboard?.writeText(m.v).then(()=>toast("Copied"),()=>toast(m.v));};$("payMethods").appendChild(row);});
+  $("subOverlay").classList.add("on");
+}
+const closeSub=()=>$("subOverlay").classList.remove("on");
+$("subBtn").onclick=openSub;$("trialSub").onclick=openSub;$("setSubBtn").onclick=openSub;$("subClose").onclick=closeSub;
+$("subOverlay").addEventListener("click",e=>{if(e.target===$("subOverlay"))closeSub();});
+$("planPick").addEventListener("click",e=>{const p=e.target.closest(".plan");if(!p)return;chosenPlan=p.dataset.plan;[...$("planPick").children].forEach(x=>x.classList.toggle("on",x===p));});
+function reqMessage(){const pl=PLANS[chosenPlan];return `Assalam o Alaikum, I want the Wakalat ${pl.label} plan (${pl.price}).\nName: ${state.profile?.fullName||""}\nEmail: ${state.email}\nReference: ${refCode()}\nI will send the payment receipt.`;}
+$("waBtn").onclick=()=>window.open(`https://wa.me/${PAY.WHATSAPP}?text=${encodeURIComponent(reqMessage())}`,"_blank","noopener");
+$("emailBtn").onclick=()=>window.open(`mailto:${PAY.EMAIL}?subject=${encodeURIComponent("Wakalat subscription — "+refCode())}&body=${encodeURIComponent(reqMessage())}`,"_blank");
+$("unlockBtn").onclick=()=>{
+  const r=verifyUnlock($("unlockInput").value.trim(),refCode());
+  if(!r.ok){toast(r.msg);return;}
+  state.sub={plan:r.plan,activatedAt:todayISO(),expiresAt:r.expiresAt,code:$("unlockInput").value.trim()};
+  DB.set("sub",state.sub);
+  // persist anything created during trial
+  DB.set("mine",state.mine);DB.set("client",state.client);DB.set("jud",state.jud);
+  closeSub();enterApp();toast("Unlocked — your work is now saved");
+};
+function makeUnlock(ref,plan,expiresAt){const base=`${ref}|${plan}|${expiresAt}`;return btoa(base).replace(/=/g,"")+"."+hash32(base+ACTIVATION_SECRET);}
+function verifyUnlock(token,ref){try{const[b64,sig]=token.split(".");if(!b64||!sig)return{ok:false,msg:"That code looks incomplete"};const base=atob(b64);if(hash32(base+ACTIVATION_SECRET)!==sig)return{ok:false,msg:"Invalid unlock code"};const[r,plan,exp]=base.split("|");if(r!==ref)return{ok:false,msg:"This code was issued for a different account"};if(exp<todayISO())return{ok:false,msg:"This code has expired"};return{ok:true,plan,expiresAt:exp};}catch(e){return{ok:false,msg:"Could not read that code"};}}
+
+/* admin */
 $("adGen").onclick=()=>{
-  const ref=$("adRef").value.trim().toUpperCase(); const plan=$("adPlan").value;
-  if(!/^WK-[0-9A-Z]{6}$/.test(ref)){ toast("Enter a valid reference like WK-AB12CD"); return; }
-  const exp=new Date(); exp.setDate(exp.getDate()+PLANS[plan].days);
-  const expiresAt=exp.toISOString().slice(0,10);
-  const code=makeUnlock(ref,plan,expiresAt);
-  const out=$("adOut"); out.classList.remove("hidden");
-  out.innerHTML=`Unlock code for <b>${esc(ref)}</b> (${PLANS[plan].label}, expires ${fmtDate(expiresAt)}):<br><b style="font-size:12px;word-break:break-all">${esc(code)}</b><br><button class="btn sm" style="margin-top:8px" onclick="navigator.clipboard?.writeText('${code}').then(()=>window.dispatchEvent(new CustomEvent('wkcopy')))">Copy code</button>`;
+  const ref=$("adRef").value.trim().toUpperCase(),plan=$("adPlan").value;
+  if(!/^WK-[0-9A-Z]{6}$/.test(ref)){toast("Enter a valid reference like WK-AB12CD");return;}
+  const e=new Date();e.setDate(e.getDate()+PLANS[plan].days);const exp=e.toISOString().slice(0,10);
+  const code=makeUnlock(ref,plan,exp);
+  const out=$("adOut");out.classList.remove("hidden");
+  out.innerHTML=`Unlock code for <b>${esc(ref)}</b> (${PLANS[plan].label}, expires ${fmtDate(exp)}):<br><b style="font-size:12px;word-break:break-all">${esc(code)}</b><br><button class="btn sm" style="margin-top:8px" id="adCopy">Copy code</button>`;
+  $("adCopy").onclick=()=>navigator.clipboard?.writeText(code).then(()=>toast("Unlock code copied"),()=>toast(code));
 };
-window.addEventListener("wkcopy",()=>toast("Unlock code copied"));
 
-function signOut(){ DB.setSession(null); state.email=null; ["liEmail","liPass","rgName","rgEmail","rgPass"].forEach(i=>{if($(i))$(i).value="";}); route(); toast("Signed out"); }
+function signOut(){DB.setSession(null);state.email=null;state.trialPopShown=false;["liEmail","liPass","rgName","rgEmail","rgPhone","rgPass"].forEach(i=>{if($(i))$(i).value="";});route();toast("Signed out");}
 
-/* ----- boot ----- */
-(function init(){
-  const t=localStorage.getItem("wakalat.theme"); if(t)document.documentElement.setAttribute("data-theme",t);
-  route();
-})();
+(function init(){const t=localStorage.getItem("wakalat.theme");if(t)document.documentElement.setAttribute("data-theme",t);route();})();
 </script>
 </body>
 </html>
