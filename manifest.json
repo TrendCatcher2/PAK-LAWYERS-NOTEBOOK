@@ -2,7 +2,7 @@
   "name": "PAK Lawyer's Notebook",
   "short_name": "PAK Notebook",
   "description": "Cases, clients, judgments, hearings and personal records for Pakistani lawyers — with AI help. By TrendCatcher.",
-  "id": "/",
+  "id": "/wakalat/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -13,20 +13,20 @@
   "dir": "ltr",
   "categories": ["productivity", "business"],
   "icons": [
-    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "screenshots": [
     {
-      "src": "icons/icon-512.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "narrow",
       "label": "PAK Notebook Mobile"
     },
     {
-      "src": "icons/icon-512.png",
+      "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "form_factor": "wide",
