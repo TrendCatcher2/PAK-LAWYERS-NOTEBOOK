@@ -129,17 +129,36 @@ input,select,textarea{font-family:inherit;font-size:14px}
 .trial-banner{background:var(--brass);color:#2A1E07;text-align:center;font-size:12.5px;font-weight:600;padding:7px 14px}
 .trial-banner button{background:#2A1E07;color:#F4D58D;border:none;border-radius:20px;padding:3px 12px;font-size:11.5px;font-weight:700;margin-left:8px}
 
-.topnav{position:sticky;top:60px;z-index:35;display:flex;align-items:center;gap:6px;padding:10px 16px;background:rgba(255,255,255,.7);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:thin}
-[data-theme="dark"] .topnav{background:rgba(20,31,24,.7)}
-.topnav button{border:1px solid transparent;background:none;padding:9px 14px;border-radius:30px;font-weight:600;font-size:13.5px;color:var(--ink-soft);white-space:nowrap;display:flex;align-items:center;gap:7px;transition:.14s;flex:none}
-.topnav button:hover{background:var(--green-tint);color:var(--green-deep)}
-.topnav button.on{background:linear-gradient(95deg,var(--green),var(--teal));color:#fff;box-shadow:0 4px 14px rgba(12,110,72,.32)}
-.topnav .pill{background:var(--red);color:#fff;border-radius:20px;font-size:10px;font-weight:700;padding:1px 7px;min-width:18px;text-align:center}
-.topnav button.on .pill{background:rgba(255,255,255,.35)}
-.nav-sep{width:1px;height:22px;background:var(--line);flex:none;margin:0 4px}
-main{width:100%;max-width:var(--maxw);margin:0 auto;padding:24px 22px 90px}
+.primnav{position:sticky;top:60px;z-index:36;display:flex;align-items:center;gap:8px;padding:10px 18px;background:linear-gradient(180deg,var(--card),var(--paper));border-bottom:1px solid var(--line);overflow-x:auto;box-shadow:0 2px 10px rgba(20,32,24,.04)}
+.primnav button{border:1px solid transparent;background:none;padding:10px 18px;border-radius:30px;font-weight:700;font-size:14px;color:var(--ink-soft);white-space:nowrap;display:flex;align-items:center;gap:8px;transition:.14s;flex:none}
+.primnav button:hover{background:var(--green-tint);color:var(--green-deep)}
+.primnav button.on{background:linear-gradient(95deg,var(--green),var(--teal));color:#fff;box-shadow:0 5px 16px rgba(12,110,72,.34)}
+.primnav .pill{background:var(--red);color:#fff;border-radius:20px;font-size:10px;font-weight:700;padding:1px 7px;min-width:18px;text-align:center}
+.primnav button.on .pill{background:rgba(255,255,255,.35)}
+
+.layout{display:flex;align-items:flex-start;max-width:var(--maxw);margin:0 auto;width:100%}
+.sidebar{width:230px;flex:none;position:sticky;top:110px;align-self:flex-start;max-height:calc(100dvh - 110px);overflow-y:auto;padding:16px 12px 24px}
+.sidebar .nav-group{font-size:10.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-faint);padding:14px 12px 6px}
+.sidebar button[data-view]{width:100%;border:none;background:none;text-align:left;padding:10px 12px;border-radius:10px;font-weight:600;font-size:13.5px;color:var(--ink-soft);display:flex;align-items:center;gap:9px;margin-bottom:2px;transition:.13s}
+.sidebar button[data-view]:hover{background:var(--green-tint);color:var(--green-deep)}
+.sidebar button[data-view].on{background:linear-gradient(180deg,var(--green),var(--green-deep));color:#F4F0E3;box-shadow:0 4px 12px rgba(12,110,72,.26)}
+.side-key{width:100%;margin-top:14px;border:1px dashed var(--brass);background:var(--card);color:var(--brass);border-radius:10px;padding:10px;font-weight:700;font-size:12.5px;cursor:pointer}
+.side-key:hover{background:var(--green-tint)}
+.nav-foot{margin-top:16px;padding:12px;border-top:1px solid var(--line-soft);font-family:'Sora',sans-serif;font-weight:700;font-size:12px;color:var(--ink-soft);line-height:1.5}
+.nav-foot span{font-family:'Inter',sans-serif;font-weight:400;font-size:10.5px;color:var(--ink-faint)}
+.side-toggle,.side-open{display:none}
+.scrim{display:none}
+main{flex:1;min-width:0;width:100%;padding:24px 22px 90px}
+@media(max-width:880px){
+  .sidebar{position:fixed;left:0;top:0;height:100dvh;max-height:none;width:262px;background:var(--card);transform:translateX(-100%);transition:transform .22s ease;box-shadow:0 0 40px rgba(0,0,0,.28);z-index:60;padding-top:18px}
+  .sidebar.open{transform:none}
+  .side-toggle{display:block;width:100%;text-align:right;border:none;background:none;color:var(--ink-faint);font-weight:600;font-size:13px;padding:4px 12px 8px;cursor:pointer}
+  .scrim.show{display:block;position:fixed;inset:0;background:rgba(10,16,12,.45);z-index:55}
+  .side-open{display:flex;align-items:center;gap:6px;position:fixed;left:16px;bottom:22px;z-index:50;background:linear-gradient(95deg,var(--green),var(--teal));color:#fff;border:none;border-radius:30px;padding:11px 16px;font-weight:700;font-size:13px;box-shadow:0 6px 20px rgba(12,110,72,.4)}
+  main{padding:20px 14px 90px}
+}
 /* explore / content cards */
-.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
 .tile{display:block;border:1px solid var(--line);border-radius:var(--r);padding:15px;background:var(--card);box-shadow:var(--shadow);text-decoration:none;color:inherit;transition:.15s;position:relative;overflow:hidden}
 .tile::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent,var(--green))}
 .tile:hover{transform:translateY(-3px);border-color:var(--accent,var(--brass))}
@@ -452,27 +471,36 @@ details.help a{color:var(--brass)}
   </div>
   <div class="trial-banner hidden" id="trialBanner">You're exploring free — saving is locked. <button id="trialCta">Subscribe to save</button></div>
 
-  <nav class="topnav" id="tabbar">
+  <nav class="primnav" id="topNav">
     <button class="on" data-view="vAlerts">⚖︎ Hearings <span class="pill hidden" id="alertPill">0</span></button>
     <button data-view="vMine">📁 My cases</button>
     <button data-view="vClient">👤 Client cases</button>
     <button data-view="vJudge">📜 Judgments</button>
-    <button data-view="vPersonal">🗂 My life</button>
-    <button data-view="vAI">✨ AI assistant</button>
     <button data-view="vSearch">🔍 Search</button>
-    <button data-view="vCal">🗓 Calendar</button>
-    <span class="nav-sep"></span>
-    <button data-view="vNews">📰 News</button>
-    <button data-view="vLive">🛰 Live</button>
-    <button data-view="vLearn">🎓 Learn</button>
-    <button data-view="vMedia">🎬 Media</button>
-    <span class="nav-sep"></span>
-    <button data-view="vHelp">❓ Help</button>
-    <button data-view="vPolicy">📑 Policies</button>
-    <button data-view="vSettings">⚙︎ Settings</button>
   </nav>
 
-  <main>
+  <div class="layout">
+    <div class="scrim" id="scrim"></div>
+    <nav class="sidebar" id="sideNav">
+      <button class="side-toggle" id="sideClose">✕ Close</button>
+      <div class="nav-group">AI &amp; planning</div>
+      <button data-view="vAI">✨ AI assistant</button>
+      <button data-view="vPersonal">🗂 My life &amp; records</button>
+      <button data-view="vCal">🗓 Calendar</button>
+      <div class="nav-group">Explore &amp; learn</div>
+      <button data-view="vNews">📰 Legal news</button>
+      <button data-view="vLive">🛰 Live &amp; community</button>
+      <button data-view="vLearn">🎓 Learning hub</button>
+      <button data-view="vMedia">🎬 Media &amp; books</button>
+      <div class="nav-group">App</div>
+      <button data-view="vHelp">❓ Help &amp; manual</button>
+      <button data-view="vPolicy">📑 Policies</button>
+      <button data-view="vSettings">⚙︎ Settings</button>
+      <button id="sideAiKey" class="side-key">🔑 Add / edit AI key</button>
+      <div class="nav-foot">PAK Lawyer's Notebook<br><span>by TrendCatcher</span></div>
+    </nav>
+
+    <main>
     <!-- ALERTS -->
     <section class="view on" id="vAlerts">
       <div class="page-head"><div><h2>Hearings &amp; alerts</h2><div class="sub">Upcoming court dates (Peshi) across all your matters, nearest first.</div></div>
@@ -686,6 +714,8 @@ details.help a{color:var(--brass)}
       </div>
     </section>
   </main>
+  </div>
+  <button class="side-open" id="sideOpen" title="More">☰ More</button>
   <button class="fab" id="fab" title="Quick add">＋</button>
 </div>
 
@@ -1022,8 +1052,22 @@ function enterApp(){
   renderAll();
 }
 function renderAll(){renderAlerts();renderCases("mine");renderCases("client");renderJudge();renderCalendar();renderSettings();}
-$("tabbar").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;[...$("tabbar").querySelectorAll("button")].forEach(x=>x.classList.toggle("on",x===b));["vAlerts","vMine","vClient","vJudge","vPersonal","vAI","vSearch","vCal","vNews","vLive","vLearn","vMedia","vHelp","vPolicy","vSettings"].forEach(v=>$(v).classList.toggle("on",v===b.dataset.view));const v=b.dataset.view;if(v==="vNews")loadNews();if(v==="vLive")loadLive();if(v==="vLearn")renderLearn();if(v==="vMedia")renderMedia();if(v==="vPersonal")renderPersonal();if(v==="vHelp")renderHelp();if(v==="vPolicy")renderPolicy();window.scrollTo(0,0);});
-$("aiKeyBtn").onclick=()=>{$("tabbar").querySelector('[data-view="vSettings"]').click();setTimeout(()=>{const k=$("aiKey");if(k){k.scrollIntoView({behavior:"smooth",block:"center"});k.focus();}},120);};
+const VIEWS=["vAlerts","vMine","vClient","vJudge","vPersonal","vAI","vSearch","vCal","vNews","vLive","vLearn","vMedia","vHelp","vPolicy","vSettings"];
+function setView(v){
+  document.querySelectorAll("[data-view]").forEach(x=>x.classList.toggle("on",x.dataset.view===v));
+  VIEWS.forEach(id=>$(id).classList.toggle("on",id===v));
+  if(v==="vNews")loadNews();if(v==="vLive")loadLive();if(v==="vLearn")renderLearn();if(v==="vMedia")renderMedia();if(v==="vPersonal")renderPersonal();if(v==="vHelp")renderHelp();if(v==="vPolicy")renderPolicy();
+  window.scrollTo(0,0);closeSide();
+}
+window.go=setView;
+function navClick(e){const b=e.target.closest("button[data-view]");if(!b)return;setView(b.dataset.view);}
+$("topNav").addEventListener("click",navClick);
+$("sideNav").addEventListener("click",navClick);
+function openSide(){$("sideNav").classList.add("open");$("scrim").classList.add("show");}
+function closeSide(){$("sideNav").classList.remove("open");$("scrim").classList.remove("show");}
+$("sideOpen").onclick=openSide;$("sideClose").onclick=closeSide;$("scrim").onclick=closeSide;
+function openAiKey(){setView("vSettings");setTimeout(()=>{const k=$("aiKey");if(k){k.scrollIntoView({behavior:"smooth",block:"center"});k.focus();}},120);}
+$("aiKeyBtn").onclick=openAiKey;$("sideAiKey").onclick=openAiKey;
 
 /* ---------- robust RSS (CORS proxy + fallback) ---------- */
 async function fetchRSS(query){
@@ -1149,7 +1193,7 @@ const MEDIA=[
 function renderMedia(){
   $("mediaWrap").innerHTML=MEDIA.map(sec=>`<div class="sec-head"><span class="ic" style="background:${sec.a}">🎬</span><div><h3>${sec.g}</h3></div></div><div class="tiles">${sec.items.map(i=>`<a class="tile" style="--accent:${sec.a}" href="${i.u}" target="_blank" rel="noopener">${i.free?'<span class="free">Free</span>':''}<div class="tk">${esc(sec.g.split(" ")[0])}</div><div class="tt">${esc(i.t)}</div><div class="td">${esc(i.d)}</div><span class="tgo">Open ›</span></a>`).join("")}</div>`).join("");
 }
-$("userChip").onclick=()=>$("tabbar").querySelector('[data-view="vSettings"]').click();
+$("userChip").onclick=()=>go("vSettings");
 $("themeBtn").onclick=()=>{const cur=document.documentElement.getAttribute("data-theme")==="dark"?"":"dark";document.documentElement.setAttribute("data-theme",cur);localStorage.setItem("wakalat.theme",cur);};
 $("trialCta").onclick=openSub;
 
@@ -1282,7 +1326,7 @@ $("caseSave").onclick=()=>{
 };
 window.editCase=(kind,id)=>{const arr=kind==="mine"?state.mine:state.client;openCase(kind,arr.find(c=>c.id===id));};
 window.delCase=(kind,id)=>{if(!confirm("Delete this case? This cannot be undone."))return;if(kind==="mine"){state.mine=state.mine.filter(c=>c.id!==id);DB.set("mine",state.mine);}else{state.client=state.client.filter(c=>c.id!==id);DB.set("client",state.client);}renderAll();toast("Deleted");};
-$("fab").onclick=()=>{const v=$("tabbar").querySelector("button.on").dataset.view;if(v==="vJudge")openJudge(null);else openCase(v==="vClient"?"client":"mine",null);};
+$("fab").onclick=()=>{const on=document.querySelector("[data-view].on");const v=on?on.dataset.view:"vMine";if(v==="vJudge")openJudge(null);else if(v==="vPersonal")openPersonal(null);else openCase(v==="vClient"?"client":"mine",null);};
 
 /* JUDGMENTS */
 function renderJudge(){
@@ -1418,11 +1462,11 @@ $("localQ").addEventListener("input",e=>{
   }).join("");
 });
 window.gotoResult=(kind,id)=>{
-  if(kind==="judge"){$("tabbar").querySelector('[data-view="vJudge"]').click();openJudge(state.judge.find(j=>j.id===id));}
-  else if(kind==="personal"){$("tabbar").querySelector('[data-view="vPersonal"]').click();openPersonal(state.personal.find(c=>c.id===id));}
-  else{$("tabbar").querySelector(`[data-view="${kind==="mine"?"vMine":"vClient"}"]`).click();const arr=kind==="mine"?state.mine:state.client;openCase(kind,arr.find(c=>c.id===id));}
+  if(kind==="judge"){go("vJudge");openJudge(state.judge.find(j=>j.id===id));}
+  else if(kind==="personal"){go("vPersonal");openPersonal(state.personal.find(c=>c.id===id));}
+  else{go(kind==="mine"?"vMine":"vClient");const arr=kind==="mine"?state.mine:state.client;openCase(kind,arr.find(c=>c.id===id));}
 };
-window.filterByCat=(cat)=>{$("tabbar").querySelector('[data-view="vMine"]').click();$("mineSearch").value=cat==="Uncategorised"?"":cat;renderCases("mine");$("tabbar").querySelector('[data-view="vClient"]')&&($("clientSearch").value=cat==="Uncategorised"?"":cat);renderCases("client");toast("Filtered by "+cat+" — see My &amp; Client cases");};
+window.filterByCat=(cat)=>{go("vMine");$("mineSearch").value=cat==="Uncategorised"?"":cat;renderCases("mine");$("clientSearch").value=cat==="Uncategorised"?"":cat;renderCases("client");toast("Filtered by "+cat);};
 $("webGo").onclick=()=>{const t=$("webTarget").value,q=$("webQ").value.trim();if(!q){toast("Type what to search");return;}const query=(t?t+" ":"")+q;window.open("https://www.google.com/search?q="+encodeURIComponent(query),"_blank","noopener");};
 $("webQ").addEventListener("keydown",e=>{if(e.key==="Enter")$("webGo").click();});
 
@@ -1499,6 +1543,169 @@ $("emailReqBtn").onclick=()=>{logRequest();const pl=PLANS[chosenPlan];const sub=
 $("unlockBtn").onclick=()=>{const res=verifyUnlock($("unlockInput").value,refCode());if(!res.ok){toast(res.msg);return;}state.sub={plan:res.plan,activatedAt:todayISO(),expiresAt:res.expiresAt};DB.set("sub",state.sub);$("subOverlay").classList.remove("on");$("trialBanner").classList.add("hidden");renderSettings();toast("Unlocked — you can save now");};
 
 function signOut(){DB.setSession(null);state.email=null;["liEmail","liPass","rgName","rgEmail","rgPhone","rgPass"].forEach(i=>{if($(i))$(i).value="";});route();toast("Signed out");}
+
+/* ============ NEW FEATURES ============ */
+async function geminiCall(prompt,jsonMode){
+  const key=state.aikey;if(!key)throw new Error("no-key");
+  const body={contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.3}};
+  if(jsonMode)body.generationConfig.responseMimeType="application/json";
+  const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(key)}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error(r.status+" "+(await r.text()).slice(0,140));
+  const d=await r.json();return (d?.candidates?.[0]?.content?.parts?.[0]?.text)||"";
+}
+function parseJSON(t){return JSON.parse(String(t).replace(/```json|```/g,"").trim());}
+function mdLite(t){t=esc(t);t=t.replace(/^\s*[\*\-]\s+(.*)$/gm,"• $1");t=t.replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");t=t.replace(/^#{1,6}\s*(.*)$/gm,"<b>$1</b>");return t.replace(/\n/g,"<br>");}
+
+/* hearings / Peshi log */
+let caseHearings=[];
+function renderHearings(){
+  $("cHearings").innerHTML=caseHearings.map((h,i)=>`<div class="ev-row"><div class="ev-head"><b>Hearing #${i+1}</b><button class="ev-del" data-rmh="${i}">✕ remove</button></div>
+    <div class="ev-grid"><input type="date" value="${esc(h.date||'')}" data-hk="date" data-i="${i}"><input placeholder="Judge / bench" value="${esc(h.judge||'')}" data-hk="judge" data-i="${i}"></div>
+    <textarea style="margin-top:8px" placeholder="What happened / order passed" data-hk="what" data-i="${i}">${esc(h.what||'')}</textarea>
+    <textarea style="margin-top:8px" placeholder="Important to remember" data-hk="remember" data-i="${i}">${esc(h.remember||'')}</textarea>
+    <input style="margin-top:8px" placeholder="Attachments / documents needed for this hearing" value="${esc(h.bring||'')}" data-hk="bring" data-i="${i}">
+    <textarea style="margin-top:8px" placeholder="Planning / strategy for next time" data-hk="plan" data-i="${i}">${esc(h.plan||'')}</textarea></div>`).join("");
+  $("cHearings").querySelectorAll("[data-hk]").forEach(el=>el.oninput=()=>{caseHearings[+el.dataset.i][el.dataset.hk]=el.value;});
+  $("cHearings").querySelectorAll("button[data-rmh]").forEach(b=>b.onclick=()=>{caseHearings.splice(+b.dataset.rmh,1);renderHearings();});
+}
+$("cAddHearing").onclick=()=>{caseHearings.push({date:"",judge:"",what:"",remember:"",bring:"",plan:""});renderHearings();};
+
+/* AI quick-fill inside a case */
+$("cAiBtn").onclick=async()=>{
+  if(!state.aikey){toast("Add your Gemini key (🔑 top-right)");return;}
+  const src=$("cAiSrc").value.trim();if(!src){toast("Paste some case details first");return;}
+  const btn=$("cAiBtn"),old=btn.textContent;btn.disabled=true;btn.textContent="Reading…";
+  try{
+    const prompt=`You are a Pakistani legal assistant. From the text, return JSON only with keys: title, court, party (opposing party), client, status (one of Active/Hold/Complete), category (e.g. Bail, Appeal, Civil Suit, Criminal Trial, Family, Writ), opened (YYYY-MM-DD or ""), next (next hearing date YYYY-MM-DD or ""), notes. Unknown => "".\n\nTEXT:\n${src}`;
+    const j=parseJSON(await geminiCall(prompt,true));
+    const set=(id,v)=>{if(v)$(id).value=v;};
+    set("cTitle",j.title);set("cCourt",j.court);set("cParty",j.party);set("cClient",j.client);set("cCategory",j.category);set("cOpened",j.opened);set("cNext",j.next);set("cNotes",j.notes);
+    if(j.status&&["Active","Hold","Complete"].includes(j.status))$("cStatus").value=j.status;
+    toast("AI filled the fields — review & save");
+  }catch(e){toast("AI error: "+(e.message=="no-key"?"add your key":e.message));}
+  btn.disabled=false;btn.textContent=old;
+};
+
+/* download a single record (with attachments) for transfer */
+window.dlOne=(kind,id)=>{
+  let rec,fname;
+  if(kind==="judge"){rec=state.judge.find(j=>j.id===id);fname="judgment";}
+  else if(kind==="personal"){rec=state.personal.find(c=>c.id===id);fname="record";}
+  else{rec=(kind==="mine"?state.mine:state.client).find(c=>c.id===id);fname=kind+"-case";}
+  if(!rec)return;
+  const blob=new Blob([JSON.stringify({type:kind,record:rec,app:"PAK Lawyer's Notebook",exportedAt:new Date().toISOString()},null,2)],{type:"application/json"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`${fname}-${String(rec.title||rec.name||rec.cite||"record").replace(/[^a-z0-9]+/gi,"-").slice(0,40)}.json`;a.click();toast("Downloaded");
+};
+
+/* ===== AI ASSISTANT ===== */
+$("aiRun").onclick=async()=>{
+  if(!state.aikey){toast("Add your Gemini key (🔑 top-right)");return;}
+  const q=$("aiAsk").value.trim();if(!q){toast("Type your question");return;}
+  const btn=$("aiRun"),old=btn.textContent;btn.disabled=true;btn.textContent="Thinking…";
+  $("aiAnswer").innerHTML=`<div class="hint" style="display:block">AI is reviewing${$("aiUseData").checked?" your records":""}…</div>`;
+  try{
+    let ctx="";
+    if($("aiUseData").checked){
+      const cs=[...state.mine.map(c=>({c,k:"My"})),...state.client.map(c=>({c,k:"Client"}))];
+      ctx="CASES:\n"+cs.slice(0,40).map(({c,k})=>`- [${k}] ${c.title} | status:${c.status} | court:${c.court||'-'} | category:${c.category||'-'} | party:${c.party||'-'} | next:${c.next||'-'} | notes:${(c.notes||'').slice(0,180)} | evidence:${(c.evidence||[]).map(e=>e.type).join(", ")} | hearings:${(c.hearings||[]).length}`).join("\n");
+      ctx+="\n\nJUDGMENTS:\n"+state.judge.slice(0,25).map(j=>`- ${j.cite||''} ${j.name||''} | ${(j.hold||'').slice(0,120)}`).join("\n");
+    }
+    const prompt=`You are an experienced Pakistani advocate mentoring a colleague. Answer practically and specific to Pakistan law and procedure. Use short bold headings and bullet points covering, where relevant: Immediate steps; Documents/evidence to prepare or record; What to file and where (court/forum); Dates & limitation cautions; Likely questions and how to answer; Strategy tips. Be concrete.\n\n${ctx?("LAWYER'S SAVED DATA (use if relevant):\n"+ctx+"\n\n"):""}QUESTION:\n${q}`;
+    const txt=await geminiCall(prompt,false);
+    $("aiAnswer").innerHTML=`<div class="panel" style="max-width:none;background:var(--paper);line-height:1.65">${mdLite(txt)}</div>`;
+  }catch(e){$("aiAnswer").innerHTML=`<div class="info-card">AI error: ${esc(e.message=="no-key"?"add your key (🔑 top-right)":e.message)}</div>`;}
+  btn.disabled=false;btn.textContent=old;
+};
+
+/* ===== PERSONAL / MY LIFE ===== */
+const PERSONAL_CATS=["Court / law activity","Meeting","Seminar / CPD (attended)","Seminar / lecture (conducted)","Discussion / debate","Trip / picnic","Session / workshop","Event / incident","Future planning","Target / goal","Personal growth","Health","Exercise / fitness","Hobby / leisure","Currently reading","Book","Family / children","Friends","Vehicle / car","Home / garden","Finance","Idea / note","Other"];
+let personalUploads=[];
+function renderPersonalUploads(){
+  $("pUploads").innerHTML=personalUploads.map((f,i)=>`<span class="file-chip">${f.type&&f.type.includes('pdf')?'📄':f.type&&f.type.startsWith('video')?'🎬':f.type&&f.type.startsWith('audio')?'🎧':'🖼'} ${esc(f.name)} <button data-rmp="${i}" style="border:none;background:none;color:var(--red);cursor:pointer">✕</button></span>`).join("");
+  $("pUploads").querySelectorAll("button[data-rmp]").forEach(b=>b.onclick=()=>{personalUploads.splice(+b.dataset.rmp,1);renderPersonalUploads();});
+}
+$("pFiles").onchange=e=>{readFiles(e.target.files,fs=>{personalUploads=personalUploads.concat(fs);renderPersonalUploads();});};
+function openPersonal(c){
+  $("pId").value=c?.id||"";$("pModalTitle").textContent=c?"Edit record":"New record";
+  $("pAiSrc").value="";$("pCat").value=c?.cat||"";$("pDate").value=c?.date||"";$("pTitle").value=c?.title||"";$("pNotes").value=c?.notes||"";$("pRemember").value=c?.remember||"";$("pPlan").value=c?.plan||"";$("pTags").value=(c?.tags||[]).join(", ");
+  $("pHealthTip").textContent=c?.health||"";$("pHealthBox").style.display=c?.health?"":"none";
+  $("pAiHint").textContent=state.aikey?"AI ready.":"Needs your Gemini key (🔑).";
+  personalUploads=(c?.files||[]).slice();$("pFiles").value="";renderPersonalUploads();
+  $("pOverlay").classList.add("on");
+}
+window.openPersonalNew=()=>openPersonal(null);
+$("addPersonal").onclick=()=>openPersonal(null);
+$("pClose").onclick=()=>$("pOverlay").classList.remove("on");
+$("pCancel").onclick=()=>$("pOverlay").classList.remove("on");
+$("pOverlay").addEventListener("click",e=>{if(e.target===$("pOverlay"))$("pOverlay").classList.remove("on");});
+$("pCat").addEventListener("change",()=>{if(/health/i.test($("pCat").value)&&!$("pHealthTip").textContent)$("pHealthBox").style.display="none";});
+$("pAiBtn").onclick=async()=>{
+  if(!state.aikey){toast("Add your Gemini key (🔑)");return;}
+  const src=$("pAiSrc").value.trim();if(!src){toast("Describe it first");return;}
+  const btn=$("pAiBtn"),old=btn.textContent;btn.disabled=true;btn.textContent="Reading…";
+  try{
+    const prompt=`From the text, return JSON only with keys: category (one of: ${PERSONAL_CATS.join("; ")}), title, date (YYYY-MM-DD or ""), notes, remember (key things to remember or ideas), plan (future plan/target or ""), tags (array of short keywords), healthTip (only if health/fitness related: a brief practical tip on what to do, prevent, or eat; else ""). TEXT:\n${src}`;
+    const j=parseJSON(await geminiCall(prompt,true));
+    if(j.category)$("pCat").value=j.category;
+    const set=(id,v)=>{if(v)$(id).value=v;};
+    set("pTitle",j.title);set("pDate",j.date);set("pNotes",j.notes);set("pRemember",j.remember);set("pPlan",j.plan);
+    if(Array.isArray(j.tags))$("pTags").value=j.tags.join(", ");
+    if(j.healthTip){$("pHealthBox").style.display="";$("pHealthTip").textContent=j.healthTip;}
+    toast("AI filled it — review & save");
+  }catch(e){toast("AI error: "+(e.message=="no-key"?"add key":e.message));}
+  btn.disabled=false;btn.textContent=old;
+};
+$("pSave").onclick=()=>{
+  if(!canSave()){$("pOverlay").classList.remove("on");openSub();return;}
+  const title=$("pTitle").value.trim(),cat=$("pCat").value.trim();
+  if(!title||!cat){toast("Category and title are required");return;}
+  const obj={id:$("pId").value||("p"+Date.now()),cat,title,date:$("pDate").value,notes:$("pNotes").value.trim(),remember:$("pRemember").value.trim(),plan:$("pPlan").value.trim(),tags:$("pTags").value.split(",").map(t=>t.trim()).filter(Boolean),health:$("pHealthTip").textContent||"",files:personalUploads};
+  const i=state.personal.findIndex(x=>x.id===obj.id);if(i>=0)state.personal[i]=obj;else state.personal.unshift(obj);
+  if(DB.set("personal",state.personal)){$("pOverlay").classList.remove("on");renderPersonal();toast("Saved");}
+};
+window.editPersonal=id=>openPersonal(state.personal.find(c=>c.id===id));
+window.delPersonal=id=>{if(!confirm("Delete this record?"))return;state.personal=state.personal.filter(c=>c.id!==id);DB.set("personal",state.personal);renderPersonal();toast("Deleted");};
+function renderPersonal(){
+  const q=($("personalSearch").value||"").toLowerCase();const f=$("personalFilter").value;
+  const rows=state.personal.filter(c=>{const t=(c.title+" "+c.cat+" "+(c.notes||"")+" "+(c.remember||"")+" "+(c.plan||"")+" "+(c.tags||[]).join(" ")).toLowerCase();return t.includes(q)&&(f==="ALL"||c.cat===f);});
+  if(!rows.length){$("personalList").innerHTML=`<div class="empty" style="grid-column:1/-1"><svg class="seal" width="64" height="64" viewBox="0 0 80 80">${sealSVG(false)}</svg><h3>${state.personal.length?'Nothing matches':'No personal records yet'}</h3><p>${state.personal.length?'Clear the search/filter.':'Capture meetings, seminars, trips, health, hobbies, reading, goals — with files and AI help.'}</p>${state.personal.length?'':'<button class="btn primary" onclick="openPersonalNew()">＋ New record</button>'}</div>`;return;}
+  $("personalList").innerHTML=rows.map(c=>{
+    const files=(c.files||[]).map(f=>`<a class="file-chip" href="${f.data}" download="${esc(f.name)}" target="_blank">${f.type&&f.type.includes('pdf')?'📄':f.type&&f.type.startsWith('video')?'🎬':f.type&&f.type.startsWith('audio')?'🎧':'🖼'} ${esc(f.name)}</a>`).join("");
+    const tags=(c.tags||[]).map(t=>`<span class="tg">${esc(t)}</span>`).join("");
+    return `<div class="case"><div class="top"><div class="name">${esc(c.title)}</div><span class="st active">${esc(c.cat)}</span></div><div class="meta">${c.date?`<span>🗓 ${fmtDate(c.date)}</span>`:""}</div>${c.notes?`<div class="rem">${esc(c.notes)}</div>`:""}${c.remember?`<div class="next">💡 ${esc(c.remember)}</div>`:""}${c.plan?`<div class="meta"><span>🎯 ${esc(c.plan)}</span></div>`:""}${c.health?`<div class="info-card" style="margin:8px 0 0">🩺 ${esc(c.health)}</div>`:""}${tags?`<div class="tagrow">${tags}</div>`:""}${files?`<div class="files">${files}</div>`:""}<div class="acts"><button class="btn sm primary" onclick="editPersonal('${c.id}')">Open</button><button class="btn sm" onclick="dlOne('personal','${c.id}')" title="Download">⤓</button><button class="btn sm" onclick="delPersonal('${c.id}')" style="color:var(--red)">Delete</button></div></div>`;
+  }).join("");
+}
+$("personalSearch").addEventListener("input",renderPersonal);
+$("personalFilter").addEventListener("change",renderPersonal);
+
+/* ===== HELP & MANUAL ===== */
+const HELP=[
+ ["Getting started","Register with your email + phone, set up your profile, then explore freely. Saving cases requires a subscription (Settings → Subscribe). Add your free AI key via 🔑 (top-right) to unlock all AI features."],
+ ["Hearings dashboard","Shows upcoming court dates (Peshi) across all matters, nearest first, with totals and a 'cases by category' strip. Click any alert to open that case."],
+ ["My cases vs Client cases","My cases = matters where you are a party. Client cases = matters you handle for clients. Both support category, custom sections, evidence and a full hearing log."],
+ ["AI quick-fill (inside a case)","Paste FIR text or rough notes in the ✨ box at the top of a case and tap 'Fill fields with AI' — it completes title, court, party, status, category, dates and notes for you to review."],
+ ["Evidence & documents","Add each document with a type (FIR, MLR, deed, statement…), exhibit/ref no., date, status (To obtain → Exhibited) and an attached file."],
+ ["Hearings / Peshi log","Record every hearing from first to latest: date, judge, what happened, what to remember, what to bring, and your plan for next time."],
+ ["Judgments & AI Bhai","Save case law. Paste a URL or judgment text and AI fills citation, court, holding, summary and tags. Attach PDFs, keep the full text, link to your cases, and extract text from scanned files."],
+ ["AI assistant","Describe any issue; with your permission it reads your saved cases and gives steps, what to file/where, what to record, likely questions and strategy — Pakistan-specific."],
+ ["My life & records","Everything beyond cases: meetings, seminars, trips, events, incidents, health, fitness, hobbies, reading, family, goals — each with photos/video/audio/PDF and optional AI help (incl. health tips)."],
+ ["Search","'Search everything' finds any word across all cases, judgments, evidence, hearings, custom sections and personal records — click a result to open it. The web search opens court-scoped Google (Supreme Court, High Courts, Pakistan Code, IndianKanoon…)."],
+ ["Calendar & reminders","See all hearings on a calendar; click any day to add reminders. Enable 🔔 (Hearings tab) for browser alerts within 2 days."],
+ ["Downloads & transfer","Use ⤓ on any case, judgment or record to download it (with attachments) for moving to another device, or Settings → Download backup for everything. Restore via Settings → Restore backup."],
+ ["AI key","Tap 🔑 (top-right) to add your free Google Gemini key. It is stored only on your device and powers AI quick-fill, AI Bhai and the AI assistant."],
+];
+function renderHelp(){$("helpWrap").innerHTML=HELP.map(h=>`<details class="help" style="margin-bottom:8px"><summary>${esc(h[0])}</summary><div style="margin-top:8px;line-height:1.6">${esc(h[1])}</div></details>`).join("");}
+
+/* ===== POLICIES (TrendCatcher) ===== */
+const POLICIES=[
+ ["Privacy Policy","Your data (cases, records, files and AI key) is stored locally in your browser on your device. PAK Lawyer's Notebook / TrendCatcher does not host or collect this data on a server. Features you choose to use call third-party services: Google Gemini (AI), Google News and public RSS proxies (news/live), and OCR libraries — these receive only the content you submit for that specific action. Back up regularly; clearing your browser clears your data."],
+ ["Terms of Service","The app is a productivity tool for legal professionals and does not provide legal advice. AI output may be inaccurate and must be verified by a qualified lawyer before any use. You are responsible for the accuracy and lawful handling of any client data you enter. Subscriptions unlock saving; manual payments are verified by TrendCatcher before an unlock code is issued."],
+ ["Refund Policy","Plans are billed monthly or six-monthly. Because activation is manual and immediate after verification, fees are generally non-refundable once an unlock code has been issued, except where required by law or in case of a verified billing error. Raise any dispute within 7 days."],
+ ["Disclaimer","Using this app creates no lawyer-client relationship. Case-law, news and AI responses are assistance only and are not a substitute for professional judgment, official records or certified copies. Always confirm citations and dates from primary sources."],
+ ["Data & security","All records live in your browser's local storage and attachments are embedded in your backups. Keep your device secure and your AI key private. Deleting your account removes all local data for your profile on this device."],
+ ["Contact","TrendCatcher — Email: "+PAY.EMAIL+" · WhatsApp: "+PAY.WHATSAPP+". For support, payment verification or policy questions, contact us any time."],
+];
+function renderPolicy(){$("policyWrap").innerHTML=`<div class="info-card">These policies are provided by <b>TrendCatcher</b>, the publisher of PAK Lawyer's Notebook.</div>`+POLICIES.map(pl=>`<details class="help" style="margin-bottom:8px"><summary>${esc(pl[0])}</summary><div style="margin-top:8px;line-height:1.6">${esc(pl[1])}</div></details>`).join("");}
 
 /* boot */
 (function init(){const t=localStorage.getItem("wakalat.theme");if(t)document.documentElement.setAttribute("data-theme",t);route();setTimeout(fireReminders,1500);})();
