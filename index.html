@@ -1966,5 +1966,14 @@ $("clientsSearch").addEventListener("input",renderClients);
 /* boot */
 (function init(){const t=localStorage.getItem("wakalat.theme");if(t)document.documentElement.setAttribute("data-theme",t);route();setTimeout(fireReminders,1500);})();
 </script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/Pak-Lawyers-Notebook/service-worker.js', { scope: '/Pak-Lawyers-Notebook/' })
+        .then((reg) => console.log('Service Worker registered successfully:', reg.scope))
+        .catch((err) => console.error('Service Worker registration failed:', err));
+    });
+  }
+</script>
 </body>
 </html>
