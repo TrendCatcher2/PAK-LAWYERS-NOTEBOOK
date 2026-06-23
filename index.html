@@ -724,21 +724,25 @@ details.help a{color:var(--brass)}
         <div class="kv"><span class="k">Your reference</span><span class="v" id="setSubRef">—</span></div>
         <div style="margin-top:14px"><button class="btn primary" id="subscribeBtn">Subscribe / renew</button></div>
       </div>
-      <div class="panel">
-        <h3>AI assistant (Gemini 2.5 Flash)</h3>
-        <div class="desc">Paste your Google AI Studio API key to power AI quick-fill, AI Bhai, the AI assistant and AI Legal Analysis. The key stays in this browser only.</div>
-        <div class="field"><label>Gemini API key</label><input id="aiKey" type="password" placeholder="AIza…"></div>
-        <button class="btn" id="aiSave">Save key</button> <button class="btn sm" id="aiClear">Remove</button>
-        <details class="help"><summary>How to get a free Gemini 2.5 Flash key</summary>
-          <ol>
-            <li>Open <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com/app/apikey</a> and sign in with Google.</li>
-            <li>Click <b>Create API key</b> → choose or create a project.</li>
-            <li>Copy the key that starts with <b>AIza…</b></li>
-            <li>Paste it above and press <b>Save key</b>.</li>
-          </ol>
-          Flash has a generous free tier. Keep your key private.
-        </details>
-      </div>
+<div class="panel" style="max-width:none">
+  <h3>AI providers — add several, auto-fallback if one fails</h3>
+  <div class="desc">Add keys for any of these. If your top provider is busy, rate-limited, or out of quota, the app automatically retries with the next one in your list — free options first.</div>
+  <div class="field"><label>Try order (drag not needed — just pick your first choice)</label>
+    <select id="aiPrimaryProvider"></select>
+  </div>
+  <div id="aiProviderKeys"></div>
+  <div class="info-card" style="margin-top:6px">All keys stay only in this browser. Free tiers: <b>Gemini</b>, <b>DeepSeek</b>, <b>Groq</b>, <b>OpenRouter (free models)</b>. ChatGPT and Claude need a paid API key but are supported as extra fallbacks.</div>
+  <details class="help"><summary>Where to get a free key for each</summary>
+    <ol>
+      <li><b>Gemini</b> — <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com/app/apikey</a> (free tier)</li>
+      <li><b>DeepSeek</b> — <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">platform.deepseek.com/api_keys</a> (free credits)</li>
+      <li><b>Groq</b> — <a href="https://console.groq.com/keys" target="_blank" rel="noopener">console.groq.com/keys</a> (free & very fast)</li>
+      <li><b>OpenRouter</b> — <a href="https://openrouter.ai/keys" target="_blank" rel="noopener">openrouter.ai/keys</a> (has free models)</li>
+      <li><b>ChatGPT</b> — <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">platform.openai.com/api-keys</a> (paid)</li>
+      <li><b>Claude</b> — <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com/settings/keys</a> (paid)</li>
+    </ol>
+  </details>
+</div>
       <div class="panel"><h3>Profile</h3>
         <div class="kv"><span class="k">Name</span><span class="v" id="setName">—</span></div>
         <div class="kv"><span class="k">Practice area</span><span class="v" id="setArea">—</span></div>
@@ -1052,7 +1056,18 @@ const PAY = {
   ]
 };
 const PLANS={ "1m":{label:"1 month",price:"₨250",days:30}, "6m":{label:"6 months",price:"₨1,000",days:182} };
-const SUPA={ url:"", key:"" };
+const SUPA={ url:"", key:"" }; // optional: paste your Supabase project URL + anon key to enable cloud sync for all users
+
+/* ===== MULTI-AI PROVIDERS — auto-fallback when one fails/is rate-limited ===== */
+const AI_PROVIDERS={
+  gemini:    {label:"Gemini 2.5 Flash (Google)", free:true,  keyName:"aikey_gemini",     placeholder:"AIza…",  help:"https://aistudio.google.com/app/apikey"},
+  deepseek:  {label:"DeepSeek (deepseek-chat)",   free:true,  keyName:"aikey_deepseek",   placeholder:"sk-…",   help:"https://platform.deepseek.com/api_keys"},
+  groq:      {label:"Groq (Llama 3.1 — free & fast)", free:true, keyName:"aikey_groq",   placeholder:"gsk_…",  help:"https://console.groq.com/keys"},
+  openrouter:{label:"OpenRouter (free models)",   free:true,  keyName:"aikey_openrouter", placeholder:"sk-or-…",help:"https://openrouter.ai/keys"},
+  openai:    {label:"ChatGPT (gpt-4o-mini)",      free:false, keyName:"aikey_openai",    placeholder:"sk-…",   help:"https://platform.openai.com/api-keys"},
+  claude:    {label:"Claude (Haiku)",             free:false, keyName:"aikey_claude",    placeholder:"sk-ant-…",help:"https://console.anthropic.com/settings/keys"}
+};
+const AI_ORDER_DEFAULT=["gemini","deepseek","groq","openrouter","openai","claude"];
 
 const $=id=>document.getElementById(id);
 const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -1084,8 +1099,7 @@ const DB={
   get(k,def){try{const v=localStorage.getItem(DB.key(k));return v?JSON.parse(v):def}catch(e){return def}},
   set(k,v){try{localStorage.setItem(DB.key(k),JSON.stringify(v));schedulePush();return true}catch(e){toast("Storage full — remove some attachments or back up & clear");return false}}
 };
-let state={email:null,profile:null,sub:null,mine:[],client:[],judge:[],reminders:[],personal:[],clients:[],aikey:null,calMonth:new Date()};
-
+let state={email:null,profile:null,sub:null,mine:[],client:[],judge:[],reminders:[],personal:[],clients:[],aikey:null,aikeys:{},aiOrder:null,calMonth:new Date()};
 function supaCfg(){try{const c=JSON.parse(localStorage.getItem("wakalat.supa")||"null");if(c&&c.url&&c.key)return c;}catch(e){}return (SUPA.url&&SUPA.key)?SUPA:null;}
 function supaHeaders(c){return{apikey:c.key,Authorization:"Bearer "+c.key,"Content-Type":"application/json"};}
 function setSyncStatus(t){const e=$("supaStatus");if(e)e.textContent=t;}
@@ -1192,8 +1206,7 @@ function renderAdminReqs(){
 function makeUnlock(ref,plan,expiresAt){const base=`${ref}|${plan}|${expiresAt}`;return btoa(base).replace(/=/g,"")+"."+hash32(base+ACTIVATION_SECRET);}
 function verifyUnlock(token,ref){try{const[b64,sig]=token.trim().split(".");if(!b64||!sig)return{ok:false,msg:"That code looks incomplete"};const base=atob(b64);if(hash32(base+ACTIVATION_SECRET)!==sig)return{ok:false,msg:"Invalid unlock code"};const[r,plan,exp]=base.split("|");if(r!==ref)return{ok:false,msg:"This code was issued for a different account"};if(exp<todayISO())return{ok:false,msg:"This code has expired"};return{ok:true,plan,expiresAt:exp};}catch(e){return{ok:false,msg:"Could not read that code"};}}
 
-function loadState(){state.profile=DB.get("profile",null);state.sub=DB.get("sub",null);state.mine=DB.get("mine",[]);state.client=DB.get("client",[]);state.judge=DB.get("judge",[]);state.reminders=DB.get("reminders",[]);state.personal=DB.get("personal",[]);state.clients=DB.get("clients",[]);state.aikey=DB.get("aikey",null);}
-function isAdmin(){return state.email===ADMIN_EMAIL;}
+function loadState(){state.profile=DB.get("profile",null);state.sub=DB.get("sub",null);state.mine=DB.get("mine",[]);state.client=DB.get("client",[]);state.judge=DB.get("judge",[]);state.reminders=DB.get("reminders",[]);state.personal=DB.get("personal",[]);state.clients=DB.get("clients",[]);state.aikey=DB.get("aikey",null);state.aikeys=DB.get("aikeys",{});state.aiOrder=DB.get("aiOrder",null);}function isAdmin(){return state.email===ADMIN_EMAIL;}
 function subActive(){return isAdmin()||(state.sub&&state.sub.expiresAt&&state.sub.expiresAt>=todayISO());}
 function canSave(){return subActive();}
 function showOnly(id){["authScreen","adminScreen","profileScreen","appShell"].forEach(s=>$(s).classList.toggle("hidden",s!==id));}
@@ -1217,8 +1230,8 @@ function enterApp(){
   showOnly("appShell");fillLogos();
   paintAvatar($("chipAv"),state.profile.fullName,state.profile.photo);
   $("chipName").textContent=(state.profile.fullName||"You").split(" ").slice(0,2).join(" ");
-  $("aiKey").value=state.aikey||"";
-  $("payEmail").textContent=PAY.EMAIL;
+$("aiKey").value=state.aikey||"";
+renderAiProviders();  $("payEmail").textContent=PAY.EMAIL;
   $("trialBanner").classList.toggle("hidden",subActive());
   $("pCatList").innerHTML=PERSONAL_CATS.map(c=>`<option>${c}</option>`).join("");
   $("personalFilter").innerHTML=`<option value="ALL">All categories</option>`+PERSONAL_CATS.map(c=>`<option>${c}</option>`).join("");
@@ -1619,8 +1632,34 @@ function renderSettings(){
   $("setSubExp").textContent=admin?"—":(state.sub?fmtDate(state.sub.expiresAt):"—");
   $("setSubRef").textContent=refCode();
 }
-$("aiSave").onclick=()=>{const k=$("aiKey").value.trim();state.aikey=k||null;DB.set("aikey",state.aikey);toast(k?"Gemini key saved":"Key cleared");};
-$("aiClear").onclick=()=>{$("aiKey").value="";state.aikey=null;DB.set("aikey",null);toast("Key removed");};
+$("aiSave").onclick=()=>{const k=$("aiKey").value.trim();state.aikey=k||null;DB.set("aikey",state.aikey);state.aikeys.gemini=state.aikey;DB.set("aikeys",state.aikeys);toast(k?"Gemini key saved":"Key cleared");renderAiProviders();};
+$("aiClear").onclick=()=>{$("aiKey").value="";state.aikey=null;DB.set("aikey",null);delete state.aikeys.gemini;DB.set("aikeys",state.aikeys);toast("Key removed");renderAiProviders();};
+
+function renderAiProviders(){
+  const sel=$("aiPrimaryProvider");if(!sel)return;
+  const order=(state.aiOrder&&state.aiOrder.length?state.aiOrder:AI_ORDER_DEFAULT);
+  sel.innerHTML=order.map(p=>`<option value="${p}">${esc(AI_PROVIDERS[p].label)}${state.aikeys[p]?" ✓":""}</option>`).join("");
+  sel.value=order[0];
+  sel.onchange=()=>{const chosen=sel.value;const rest=AI_ORDER_DEFAULT.filter(p=>p!==chosen);state.aiOrder=[chosen,...rest];DB.set("aiOrder",state.aiOrder);toast(AI_PROVIDERS[chosen].label+" will be tried first");renderAiProviders();};
+  const box=$("aiProviderKeys");
+  box.innerHTML=Object.keys(AI_PROVIDERS).map(p=>{
+    const info=AI_PROVIDERS[p];const val=state.aikeys[p]||(p==="gemini"?state.aikey:"")||"";
+    return `<div class="field"><label>${esc(info.label)} ${info.free?'<span style="color:var(--green);font-weight:700">(free)</span>':'<span style="color:var(--ink-faint);font-weight:600">(paid)</span>'}</label>
+      <div style="display:flex;gap:8px"><input type="password" data-prov="${p}" placeholder="${esc(info.placeholder)}" value="${esc(val)}" style="flex:1">
+      <button class="btn sm" data-saveprov="${p}">Save</button><button class="btn sm" data-clrprov="${p}" style="border-color:var(--red);color:var(--red)">✕</button></div></div>`;
+  }).join("");
+  box.querySelectorAll("button[data-saveprov]").forEach(b=>b.onclick=()=>{
+    const p=b.dataset.saveprov;const inp=box.querySelector(`input[data-prov="${p}"]`);const k=inp.value.trim();
+    state.aikeys[p]=k||undefined;if(!k)delete state.aikeys[p];DB.set("aikeys",state.aikeys);
+    if(p==="gemini"){state.aikey=k||null;DB.set("aikey",state.aikey);}
+    toast(k?(AI_PROVIDERS[p].label+" key saved"):(AI_PROVIDERS[p].label+" key cleared"));renderAiProviders();
+  });
+  box.querySelectorAll("button[data-clrprov]").forEach(b=>b.onclick=()=>{
+    const p=b.dataset.clrprov;delete state.aikeys[p];DB.set("aikeys",state.aikeys);
+    if(p==="gemini"){state.aikey=null;DB.set("aikey",null);}
+    toast(AI_PROVIDERS[p].label+" key removed");renderAiProviders();
+  });
+}
 $("editProfile").onclick=()=>{openProfile();showOnly("profileScreen");};
 $("exportData").onclick=()=>{const dump={profile:state.profile,sub:state.sub,mine:state.mine,client:state.client,judge:state.judge,reminders:state.reminders,personal:state.personal,clients:state.clients,exportedAt:new Date().toISOString()};const blob=new Blob([JSON.stringify(dump,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=`wakalat-backup-${todayISO()}.json`;a.click();toast("Backup downloaded");};
 $("importBtn").onclick=()=>$("importFile").click();
@@ -1651,13 +1690,69 @@ $("unlockBtn").onclick=()=>{const res=verifyUnlock($("unlockInput").value,refCod
 function signOut(){sessionStorage.removeItem("pulled");DB.setSession(null);state.email=null;["liEmail","liPass","rgName","rgEmail","rgPhone","rgPass"].forEach(i=>{if($(i))$(i).value="";});route();toast("Signed out");}
 
 /* ============ AI CORE ============ */
-async function geminiCall(prompt,jsonMode){
-  const key=state.aikey;if(!key)throw new Error("no-key");
+/* ---- per-provider raw callers ---- */
+async function callGemini(key,prompt,jsonMode){
   const body={contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.3}};
   if(jsonMode)body.generationConfig.responseMimeType="application/json";
   const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(key)}`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});
-  if(!r.ok)throw new Error(r.status+" "+(await r.text()).slice(0,140));
+  if(!r.ok)throw new Error("gemini "+r.status+" "+(await r.text()).slice(0,140));
   const d=await r.json();return (d?.candidates?.[0]?.content?.parts?.[0]?.text)||"";
+}
+async function callDeepseek(key,prompt,jsonMode){
+  const body={model:"deepseek-chat",messages:[{role:"user",content:prompt}],temperature:0.3};
+  if(jsonMode)body.response_format={type:"json_object"};
+  const r=await fetch("https://api.deepseek.com/chat/completions",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+key},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error("deepseek "+r.status+" "+(await r.text()).slice(0,140));
+  const d=await r.json();return d?.choices?.[0]?.message?.content||"";
+}
+async function callGroq(key,prompt,jsonMode){
+  const body={model:"llama-3.1-8b-instant",messages:[{role:"user",content:prompt}],temperature:0.3};
+  if(jsonMode)body.response_format={type:"json_object"};
+  const r=await fetch("https://api.groq.com/openai/v1/chat/completions",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+key},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error("groq "+r.status+" "+(await r.text()).slice(0,140));
+  const d=await r.json();return d?.choices?.[0]?.message?.content||"";
+}
+async function callOpenRouter(key,prompt,jsonMode){
+  const body={model:"meta-llama/llama-3.1-8b-instruct:free",messages:[{role:"user",content:prompt}],temperature:0.3};
+  if(jsonMode)body.response_format={type:"json_object"};
+  const r=await fetch("https://openrouter.ai/api/v1/chat/completions",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+key},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error("openrouter "+r.status+" "+(await r.text()).slice(0,140));
+  const d=await r.json();return d?.choices?.[0]?.message?.content||"";
+}
+async function callOpenAI(key,prompt,jsonMode){
+  const body={model:"gpt-4o-mini",messages:[{role:"user",content:prompt}],temperature:0.3};
+  if(jsonMode)body.response_format={type:"json_object"};
+  const r=await fetch("https://api.openai.com/v1/chat/completions",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+key},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error("openai "+r.status+" "+(await r.text()).slice(0,140));
+  const d=await r.json();return d?.choices?.[0]?.message?.content||"";
+}
+async function callClaude(key,prompt,jsonMode){
+  const body={model:"claude-3-5-haiku-20241022",max_tokens:2000,messages:[{role:"user",content:jsonMode?(prompt+"\n\nRespond with ONLY valid JSON, no markdown fences."):prompt}]};
+  const r=await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":key,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify(body)});
+  if(!r.ok)throw new Error("claude "+r.status+" "+(await r.text()).slice(0,140));
+  const d=await r.json();return d?.content?.map(c=>c.text||"").join("")||"";
+}
+const AI_CALLERS={gemini:callGemini,deepseek:callDeepseek,groq:callGroq,openrouter:callOpenRouter,openai:callOpenAI,claude:callClaude};
+
+/* ---- master entry point: tries providers in order, skips ones with no key, falls back on failure ---- */
+function aiTryOrder(){
+  const order=(state.aiOrder&&state.aiOrder.length?state.aiOrder:AI_ORDER_DEFAULT).filter(p=>AI_PROVIDERS[p]);
+  return order.filter(p=>(p==="gemini"?(state.aikeys.gemini||state.aikey):state.aikeys[p]));
+}
+async function geminiCall(prompt,jsonMode){
+  const order=aiTryOrder();
+  if(!order.length)throw new Error("no-key");
+  let lastErr=null;
+  for(const p of order){
+    const key=p==="gemini"?(state.aikeys.gemini||state.aikey):state.aikeys[p];
+    try{
+      const txt=await AI_CALLERS[p](key,prompt,jsonMode);
+      if(txt&&txt.trim()){ if(p!==order[0])toast("Used "+AI_PROVIDERS[p].label+" (previous provider unavailable)"); return txt; }
+      lastErr=new Error(p+": empty response");
+    }catch(e){ lastErr=e; /* try next provider */ }
+  }
+  throw lastErr||new Error("no-key");
+}
 }
 function parseJSON(t){return JSON.parse(String(t).replace(/```json|```/g,"").trim());}
 function aiPick(obj){const norm={};Object.keys(obj||{}).forEach(k=>{norm[k.toLowerCase().replace(/[^a-z0-9]/g,"")]=obj[k];});return(...al)=>{for(const a of al){const v=norm[a.toLowerCase().replace(/[^a-z0-9]/g,"")];if(v!=null&&String(v).trim()!=="")return Array.isArray(v)?v.join(", "):String(v);}return"";};}
