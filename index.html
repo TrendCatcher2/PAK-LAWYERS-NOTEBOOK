@@ -224,7 +224,7 @@ main{flex:1;min-width:0;width:100%;padding:24px 22px 90px}
 .alert{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--brass);border-radius:var(--r-sm);padding:13px 15px;margin-bottom:10px}
 .alert.urgent{border-left-color:var(--red)}
 .alert .when{flex:none;text-align:center;min-width:52px}
-.alert .when .d{font-family:'Marcellus',serif;font-size:22px;color:var(--green-deep);line-height:1}
+.alert .when .d{font-family:'Marcellus',serif;font-size:2b2px;color:var(--green-deep);line-height:1}
 .alert.urgent .when .d{color:var(--red)}
 .alert .when .m{font-size:10px;color:var(--ink-faint);text-transform:uppercase}
 .alert .body{flex:1;min-width:0}.alert .body .t{font-weight:600;font-size:14.5px}
@@ -2027,6 +2027,161 @@ $("clientsSearch").addEventListener("input",renderClients);
 
 /* boot */
 (function init(){const t=localStorage.getItem("wakalat.theme");if(t)document.documentElement.setAttribute("data-theme",t);route();setTimeout(fireReminders,1500);})();
+</script>
+  <script>
+/* ===== FIR / Pre-Hearing Analyzer (drop-in module) ===== */
+(function(){
+  if(!window.$||!window.state) { /* globals come from main script */ }
+  let firSrc="";
+
+  /* styles */
+  const css=document.createElement("style");
+  css.textContent=`
+  #vFir .fir-up{background:linear-gradient(180deg,var(--green-tint),transparent);border:1px solid var(--line);border-radius:var(--r-sm);padding:14px}
+  .fir-bars{display:grid;gap:10px;margin:4px 0}
+  .fir-bar{display:flex;align-items:center;gap:10px}
+  .fir-bar-l{flex:none;width:150px;font-size:12.5px;color:var(--ink-soft);font-weight:600}
+  .fir-bar-t{flex:1;height:11px;border-radius:6px;background:var(--sand);overflow:hidden}
+  .fir-bar-t > i{display:block;height:100%;border-radius:6px;transition:width .5s}
+  .fir-bar-v{flex:none;width:42px;text-align:right;font-weight:700;font-size:12.5px;font-family:'Spline Sans Mono',monospace}
+  .fir-verdict{display:flex;align-items:center;gap:14px;padding:14px;border-radius:var(--r);color:#F2EEE3;margin-bottom:14px}
+  .fir-verdict .vs{flex:none;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;font-family:'Marcellus',serif;font-size:24px;font-weight:700;background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.5)}
+  .fir-verdict .vt{font-weight:700;font-size:16px}.fir-verdict .vn{font-size:12.5px;opacity:.92;margin-top:2px}
+  .fir-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:14px}
+  .fir-mini{border:1px solid var(--line);border-left:4px solid var(--brass);border-radius:var(--r-sm);background:var(--card);padding:11px 13px}
+  .fir-mini.g{border-left-color:#1f9d55}.fir-mini.y{border-left-color:var(--brass)}.fir-mini.r{border-left-color:var(--red)}
+  .fir-mini h5{font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--ink-faint);margin-bottom:4px}
+  .fir-mini .mv{font-weight:700;font-size:14px}.fir-mini .mn{font-size:12px;color:var(--ink-soft);margin-top:3px}
+  .fir-chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;border:1px solid var(--line);border-radius:20px;padding:4px 11px;margin:0 6px 6px 0;background:var(--card)}
+  .fir-chip .d{width:9px;height:9px;border-radius:50%}
+  `;
+  document.head.appendChild(css);
+
+  /* sidebar button + view */
+  const side=$("sideNav");
+  if(side){const btn=document.createElement("button");btn.dataset.view="vFir";btn.innerHTML="🩺 FIR / pre-hearing";const after=side.querySelector('button[data-view="vAI"]');after?after.after(btn):side.appendChild(btn);}
+  const main=document.querySelector("main");
+  if(main){const sec=document.createElement("section");sec.className="view";sec.id="vFir";
+    sec.innerHTML=`
+    <div class="page-head"><div><h2>FIR / pre-hearing analysis</h2><div class="sub">Paste or extract an FIR, charge sheet or order. AI checks eligibility, health, delay, jurisdiction, timeline & evidence — then tells you if it's ready for the next hearing.</div></div></div>
+    <div class="panel" style="max-width:none">
+      <div class="fir-up">
+        <div class="field" style="margin:0"><label>Document text</label><textarea id="firSrc" style="min-height:120px" placeholder="Paste FIR / charge sheet / order text here…"></textarea></div>
+        <div style="margin-top:10px"><label style="font-weight:600;font-size:12.5px;color:var(--ink-soft)">…or extract from a file (PDF / Word / image-OCR)</label>
+          <input id="firFile" type="file" accept="application/pdf,image/*,.docx" style="margin-top:6px"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          <button class="btn sm" id="firExtract" type="button">📄 Extract text</button>
+          <button class="btn primary" id="firRun" type="button">🩺 Analyse for hearing</button>
+        </div>
+        <div class="hint" id="firHint" style="margin-top:8px">Needs your Gemini key (🔑 top-right).</div>
+      </div>
+      <div id="firOut" style="margin-top:16px"></div>
+    </div>`;
+    main.appendChild(sec);}
+
+  /* register so setView can toggle it */
+  if(window.VIEWS&&VIEWS.indexOf("vFir")<0)VIEWS.push("vFir");
+
+  /* helpers */
+  const barColor=p=>p>=70?"linear-gradient(90deg,#1f9d55,#2fb86a)":p>=40?"linear-gradient(90deg,var(--brass),var(--brass-soft))":"linear-gradient(90deg,var(--red),#c8503f)";
+  const cls=s=>{s=String(s||"").toLowerCase();if(/(yes|present|eligible|competent|consistent|reasonable|strong|registrable|cognizable|done|met|ready|sufficient)/.test(s))return"g";if(/(no|missing|absent|weak|critical|suspicious|contradict|conflict|delay|unexplained|barred|not |insufficient|incompet)/.test(s))return"r";return"y";};
+  const dotColor=c=>c==="g"?"#1f9d55":c==="r"?"var(--red)":"var(--brass)";
+  const bar=(label,p)=>{p=Math.max(0,Math.min(100,parseInt(p)||0));return `<div class="fir-bar"><span class="fir-bar-l">${esc(label)}</span><div class="fir-bar-t"><i style="width:${p}%;background:${barColor(p)}"></i></div><span class="fir-bar-v">${p}%</span></div>`;};
+  const mini=(title,val,note)=>{const c=cls(val);return `<div class="fir-mini ${c}"><h5>${esc(title)}</h5><div class="mv">${esc(val||"—")}</div>${note?`<div class="mn">${esc(note)}</div>`:""}</div>`;};
+  const li=(name,status,note)=>{const c=cls(status);return `<div class="li-item li-${c==="g"?"good":c==="r"?"bad":"warn"}"><span class="li-dot"></span><span><span class="li-name">${esc(name)}</span>${status?` — ${esc(status)}`:""}${note?`<br><span style="opacity:.85">${esc(note)}</span>`:""}</span></div>`;};
+
+  function render(a){
+    const v=a.hearingReadiness||{};const score=Math.max(0,Math.min(100,parseInt(v.score)||parseInt(a.healthScore)||0));
+    const verdict=v.verdict||(score>=70?"Ready":score>=45?"Needs work":"Not ready");
+    const vColor=score>=70?"linear-gradient(110deg,#15803d,#1f9d55)":score>=45?"linear-gradient(110deg,#b07d1c,#d6a646)":"linear-gradient(110deg,#7f1d1d,#a52a20)";
+    const b=a.bars||{};
+    const elig=(a.eligibility||[]).map(e=>{const c=cls(e.status);return `<span class="fir-chip" title="${esc(e.note||'')}"><span class="d" style="background:${dotColor(c)}"></span>${esc(e.label||"—")}: <b>${esc(e.status||"?")}</b></span>`;}).join("");
+    const fields=(a.coreFields||[]).map(f=>li(f.field||f.name||"—",f.status,f.note)).join("");
+    const laws=(a.applicableLaws||[]).map(l=>{const p=parseInt(l.matchPercent)||0;const pc=p>=70?"pct-good":p>=40?"pct-warn":"pct-bad";return `<div class="law-card"><div class="lh"><b>${esc(l.provision||l.law||"—")}</b><span class="law-pct ${pc}">${p}% match</span></div>${l.note?`<div style="font-size:12px;color:var(--ink-soft);margin-top:4px">${esc(l.note)}</div>`:""}</div>`;}).join("");
+    const evi=(a.evidence||[]).map(e=>li(e.item||e.name||"—",e.status,e.note)).join("");
+    const weak=(a.weaknesses||[]).map(w=>{const sev=String(w.severity||"high").toLowerCase();const sc=sev.startsWith("low")?"sev-low":sev.startsWith("med")?"sev-med":"";return `<div class="weak-card ${sc}"><div class="wi">${esc(w.issue||"—")}<span class="wsev">${esc(w.severity||"high")}</span></div>${w.fix?`<div class="wf">↳ ${esc(w.fix)}</div>`:""}</div>`;}).join("");
+    const miss=(a.missingEvidence||[]).map(e=>li(typeof e==="string"?e:(e.item||"—"),(typeof e==="object"&&e.status)||"Needs collection")).join("");
+    const plan=(a.preHearingChecklist||a.nextHearingPlan||[]).map(p=>`<div class="li-item"><span class="li-dot" style="background:var(--teal)"></span><span>${esc(typeof p==="string"?p:(p.task||""))}</span></div>`).join("");
+    const sec=(t,inner)=>inner?`<div class="la-sec"><h4>${esc(t)}</h4>${inner}</div>`:"";
+    return `<div class="la-wrap"><div class="la-body" style="padding:14px">
+      <div class="fir-verdict" style="background:${vColor}"><div class="vs">${score}</div><div><div class="vt">${esc(verdict)} for hearing</div><div class="vn">${esc(a.documentType||"Document")} — ${esc(v.note||a.summary||"")}</div></div></div>
+      <div class="fir-bars">${bar("FIR / doc health",b.firHealth!=null?b.firHealth:a.healthScore)}${bar("Evidence strength",b.evidenceStrength)}${bar("Investigation done",b.investigation)}${bar("Case strength",b.caseStrength)}</div>
+      ${elig?`<div class="la-sec"><h4>Eligibility</h4>${elig}</div>`:""}
+      <div class="fir-grid">
+        ${a.delayAnalysis?mini("Reporting delay",(a.delayAnalysis.reportingDelay||a.delayAnalysis.status||"—"),a.delayAnalysis.note):""}
+        ${a.jurisdiction?mini("Jurisdiction",a.jurisdiction.status,a.jurisdiction.note):""}
+        ${a.timeline?mini("Timeline",a.timeline.status,a.timeline.note):""}
+      </div>
+      ${sec("Core fields",fields)}
+      ${sec("Applicable law & charge match",laws)}
+      ${sec("Evidence",evi)}
+      ${sec("Weaknesses & fixes",weak)}
+      ${sec("Missing / to collect",miss)}
+      ${sec("Pre-hearing checklist",plan)}
+      <div class="la-rec" style="margin-top:12px"><button class="btn sm primary" id="firToCase">＋ Save as Client Case</button><button class="btn sm" id="firAgain">Analyse another</button></div>
+      <div class="hint" style="display:block;margin-top:10px">AI assessment — verify against the FIR, statute and primary record before relying on it.</div>
+    </div></div>`;
+  }
+
+  async function run(){
+    if(!state.aikey){toast("Add your Gemini key (🔑 top-right)");return;}
+    const txt=($("firSrc").value||"").trim();
+    if(txt.length<15){toast("Paste or extract some document text first");return;}
+    firSrc=txt;
+    const out=$("firOut");out.innerHTML=`<div class="la-loading"><span class="la-spin"></span> Analysing the FIR / document…</div>`;
+    const prompt=`You are a senior Pakistani criminal advocate doing a PRE-HEARING analysis of the document below (usually an FIR, challan/charge sheet or court order). Return ONLY valid JSON, no markdown, no prose. Use "" or [] when unknown — NEVER invent facts. Schema:
+{
+ "documentType":"",
+ "healthScore": <0-100>,
+ "summary":"one sentence",
+ "eligibility":[{"label":"Offence cognizable / Bailable vs non-bailable / Court of competent jurisdiction / FIR registrable / Within limitation / Sanction required","status":"Yes|No|Bailable|Non-bailable|Competent|Unclear","note":""}],
+ "bars":{"firHealth":<0-100>,"evidenceStrength":<0-100>,"investigation":<0-100>,"caseStrength":<0-100>},
+ "coreFields":[{"field":"FIR no / Date & time / Police station / Complainant / Accused / Place of occurrence / Witnesses / IO / Sections","status":"Present|Partial|Missing","note":""}],
+ "delayAnalysis":{"reportingDelay":"e.g. 2 days","status":"Reasonable|Review required|Unexplained","note":"consider distance, accessibility, stated reasons"},
+ "jurisdiction":{"status":"Consistent|Insufficient info|Potential conflict","note":""},
+ "timeline":{"status":"Consistent|Requires review|Significant inconsistency","note":""},
+ "applicableLaws":[{"provision":"e.g. Section 302 PPC","matchPercent":<0-100>,"note":"do the facts support every ingredient?"}],
+ "evidence":[{"item":"Documentary/Medical/Forensic/Digital/Witness","status":"Strong|Partial|Weak|Missing","note":""}],
+ "weaknesses":[{"issue":"","severity":"high|medium|low","fix":""}],
+ "missingEvidence":[{"item":"","status":"Needs collection|Missing"}],
+ "preHearingChecklist":["concrete task to do before the next hearing"],
+ "hearingReadiness":{"score":<0-100>,"verdict":"Ready|Needs work|Not ready","note":""}
+}
+DOCUMENT:
+${txt.slice(0,15000)}`;
+    try{const a=parseJSON(await geminiCall(prompt,true));out.innerHTML=render(a);
+      $("firToCase").onclick=()=>{if(typeof openCase==="function"){go("vClient");openCase("client",null);setTimeout(()=>{const s=$("cAiSrc");if(s){s.value=firSrc;}toast("Tap Fill fields with AI to build the case");},100);}};
+      $("firAgain").onclick=()=>{out.innerHTML="";$("firSrc").value="";window.scrollTo(0,0);};
+      toast("Analysis ready");
+    }catch(e){out.innerHTML=`<div class="info-card">AI error: ${esc(e.message=="no-key"?"add your key (🔑)":e.message)}</div>`;}
+  }
+
+  /* wire (defer so elements exist) */
+  setTimeout(()=>{
+    const r=$("firRun");if(r)r.onclick=async()=>{r.disabled=true;const o=r.textContent;r.textContent="Analysing…";await run();r.disabled=false;r.textContent=o;};
+    const x=$("firExtract");if(x)x.onclick=async()=>{const f=$("firFile").files[0];if(!f){toast("Choose a file");return;}x.disabled=true;const o=x.textContent;x.textContent="Extracting…";try{const t=await extractFileText(f,s=>x.textContent=s);if(t){const cur=$("firSrc").value.trim();$("firSrc").value=cur?cur+"\n\n"+t:t;toast("Text extracted");}else toast("No text found");}catch(e){toast("Extract failed: "+(e.message||""));}x.disabled=false;x.textContent=o;};
+    const h=$("firHint");if(h&&state.aikey)h.textContent="AI ready — paste or extract a document and analyse.";
+  },300);
+})();
+</script>
+  <script>
+/* clear leftover file inputs whenever a modal opens */
+(function(){
+  const ids=["cExtractFile","cFiles","jExtractFile","jFiles","pExtractFile","pFiles","firFile","ccLinks","profPhoto","homeRestoreFile","importFile"];
+  function clearFiles(root){
+    (root||document).querySelectorAll('input[type="file"]').forEach(i=>{try{i.value="";}catch(e){}});
+  }
+  // when any overlay gets the "on" class, wipe its file inputs
+  const obs=new MutationObserver(muts=>{
+    muts.forEach(m=>{
+      const el=m.target;
+      if(el.classList&&el.classList.contains("overlay")&&el.classList.contains("on")) clearFiles(el);
+    });
+  });
+  document.querySelectorAll(".overlay").forEach(o=>obs.observe(o,{attributes:true,attributeFilter:["class"]}));
+  // also wipe the FIR module's file input each time its view opens
+  const firRun=document.getElementById("firRun");
+})();
 </script>
 </body>
 </html>
