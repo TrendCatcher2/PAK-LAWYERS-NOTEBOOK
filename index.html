@@ -896,6 +896,76 @@ const SECTIONS = [
       F("Profile photo","","upload"),
       F("CV (PDF)","","upload"),
       F("Short bio","Constitutional law scholar focused on fundamental rights and public-interest litigation in Pakistan.","textarea",null,true)
+    ]}, /* ---------- NEW LAW FACULTY ADVISORY & LOG CARDS ---------- */
+  { id:"internships", name:"Internship & Chambers Placement", icon:"profile", group:"side",
+    desc:"Track student legal training in chambers, law firms, courts, and legal aid clinics.",
+    recordOnly: true, // System flag to remove WhatsApp broadcast buttons
+    fields:[
+      F("Student","Select Student..."),
+      F("Placement type","Chambers","select",["Chambers","Law Firm","Court","Legal Aid Org"]),
+      F("Supervising advocate/organization name",""),
+      F("Contact info of supervisor",""),
+      F("Duration (start – end date)","2026-06-01 to 2026-07-15"),
+      F("Nature of work (short text)","Drafting constitutional petitions, case law indexing, court observations","textarea",null,true),
+      F("Performance remarks (teacher/supervisor)","Excellent analytical skills; punctual and deeply observant of courtroom decorum.","textarea",null,true),
+      F("Certificate (upload)","","upload"),
+      F("Status","Ongoing","select",["Ongoing","Completed","Pending"])
+    ]},
+
+  { id:"viva-records", name:"Viva / Oral Exam Record", icon:"feedback", group:"side",
+    desc:"Internal evaluations for oral examinations, subject defenses, and panel recommendations.",
+    recordOnly: true,
+    fields:[
+      F("Student","Select Student..."),
+      F("Course/subject","LAW-301 Constitutional Law I"),
+      F("Date","2026-06-18","date"),
+      F("Panel members","Dr. Abdul Haq Baloch, Dr. Saima Naz, Mr. Imran Rind","textarea",null,true),
+      F("Questions asked (repeatable short entries)","1. What is the doctrine of pith and substance?\n2. Discuss the ratio decidendi of the Asma Jilani case.","textarea",null,true),
+      F("Score/grade","B+","text"),
+      F("Recommendation","Pass","select",["Pass","Refer","Fail"]),
+      F("Remarks","Demonstrated steady conceptual grasp of federal distribution of power; slight hesitation on procedural writs.","textarea",null,true)
+    ]},
+
+  { id:"disciplinary-log", name:"Disciplinary / Conduct Log", icon:"observation", group:"side",
+    desc:"Confidential disciplinary logs. AI functionality is restricted solely to formatting/summarization.",
+    recordOnly: true,
+    isConfidential: true, // Special UI indicator badge trigger
+    manualOnlyDrafting: true, // Restricts AI from auto-generating original descriptions
+    fields:[
+      F("Student","Select Student..."),
+      F("Incident type","Exam misconduct","select",["Plagiarism","Unauthorized absence","Exam misconduct","Other"]),
+      F("Date","2026-05-12","date"),
+      F("Description (private long text)","Unauthorized annotated materials discovered during the mid-term examination session.","textarea",null,true),
+      F("Action taken","Official warning issued; sessional marks penalized for the respective module.","textarea",null,true),
+      F("Status","Resolved","select",["Open","Resolved"]),
+      F("Confidential flag","Locked (Faculty-Only)","select",["Locked (Faculty-Only)"])
+    ]},
+
+  { id:"lor-log", name:"Recommendation Letters (LOR) Log", icon:"research", group:"side",
+    desc:"Archived record of academic and professional recommendation letters issued to graduates.",
+    recordOnly: true,
+    fields:[
+      F("Student","Select Student..."),
+      F("Purpose","LLM abroad","select",["LLM abroad","Judicial clerkship","Bar","Job","Scholarship"]),
+      F("Institution/recipient","University of London / Selection Committee"),
+      F("Date issued","2026-04-10","date"),
+      F("Letter file (upload)","","upload"),
+      F("Notes (what was emphasized, so future letters don't contradict)","Emphasized top-tier research capacity, active moot court leadership, and 89% score in Constitutional Law.","textarea",null,true)
+    ]},
+
+  { id:"guest-lectures", name:"Guest Lecture / Seminar Log", icon:"syllabus", group:"top",
+    desc:"Records of specialized seminars with supplemental bibliographic tracking.",
+    recordOnly: true,
+    hasSourceCitation: true, // Enables the Source & Citation module beneath the record grid
+    fields:[
+      F("Speaker name","Justice (R) Syed Muhammad Khan"),
+      F("Speaker credentials/affiliation","Former High Court Judge / Supreme Court Advocate"),
+      F("Topic","Evolution of Public Interest Litigation under Art. 184(3)"),
+      F("Date","2026-03-24","date"),
+      F("Linked course","LAW-301 Constitutional Law I"),
+      F("Key takeaways (short text)","Explored limits of suo motu jurisdiction, evolutionary milestones from 1990 to 2026, and procedural balance.","textarea",null,true),
+      F("Recording/slides (upload)","","upload"),
+      F("Source & Citation Reference","1. Khan, S. M. (2024). 'The Bounds of Judicial Review'. Pakistan Law Journal, 42(3).\n2. See also: Shehla Zia v. WAPDA (PLD 1994 SC 416).","textarea",null,true)
     ]}
 ];
 
@@ -1103,8 +1173,10 @@ function renderPanel(){
   let extra = "";
   if(sec.id==="syllabus") extra = `<button class="btn btn-brass" id="libBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg> Load from library</button>`;
   if(sec.id==="assignments") extra = `<button class="btn btn-brass" id="gradeBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Grade submission</button>`;
+  
   const recs=loadRecs(sec.id), cur=curRecId(sec.id);
   const opts=recs.map(r=>`<option value="${r.id}" ${r.id===cur?"selected":""}>${esc(recTitle(sec.id,r.id))}${r.id==="seed"?" · sample":""}</option>`).join("");
+  
   document.getElementById("panelMount").innerHTML = `
     <div class="panel">
       <div class="panel-head">
@@ -1112,31 +1184,78 @@ function renderPanel(){
           <div class="panel-eyebrow">${sec.group==="top"?"Primary record":"Faculty record"} · ${sec.fields.length} fields · ${recs.length} record${recs.length>1?"s":""}</div>
           <div class="panel-title">${sec.name}</div>
           <div class="panel-desc">${sec.desc}</div>
+          
+          ${sec.isConfidential ? `
+            <div style="display:inline-flex; align-items:center; gap:6px; background:var(--garnet-soft); color:var(--garnet); font-size:12px; font-weight:600; padding:4px 8px; border-radius:4px; margin-top:8px; border:1px solid rgba(142,47,61,0.2);">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> CONFIDENTIAL · FACULTY ACCESS ONLY
+            </div>
+          ` : ""}
         </div>
         <div class="panel-actions">
           ${extra}
-          <button class="btn btn-ghost" id="resetBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg> Reset</button>
-          <button class="btn btn-ai" id="assistBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg> AI Assist</button>
+          <button class="btn btn-ghost" id="resetBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg> Discard / Reset</button>
+          <button class="btn btn-ai" id="assistBtn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/></svg> 
+            ${sec.manualOnlyDrafting ? "AI Summarize/Format Only" : "AI Assist Options"}
+          </button>
         </div>
       </div>
       <div class="rec-bar">
-        <span class="rl">Record</span>
+        <span class="rl">Record Entry</span>
         <select id="recSel">${opts}</select>
-        <button class="rb new" id="recNew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> New ${esc(sec.name)}</button>
-        ${cur!=="seed"?`<button class="rb del" id="recDel" title="Delete this record"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></button>`:""}
+        <button class="rb new" id="recNew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg> New Record</button>
+        ${cur!=="seed"?`<button class="rb del" id="recDel" title="Delete this record"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg> Delete</button>`:""}
       </div>
+      
       <div class="grid" id="gridMount"></div>
+
+      ${sec.hasSourceCitation ? `
+        <div style="margin-top:24px; padding:16px; background:var(--parchment); border-left:4px solid var(--brass); border-radius:0 6px 6px 0; border-top:1px solid var(--bone); border-bottom:1px solid var(--bone); border-right:1px solid var(--bone);">
+          <div style="font-family:'Spectral',serif; font-weight:700; color:var(--ink); font-size:15px; margin-bottom:4px;">Linked Legal Sources &amp; Faculty Citations</div>
+          <p style="font-size:12px; color:var(--txt-2); margin:0; line-height:1.5;">
+            The materials reference mandatory source reading or cited case law indexed under HEC Pakistan legal education directives for research verification.
+          </p>
+        </div>
+      ` : ""}
     </div>`;
+
   const grid = document.getElementById("gridMount");
-  sec.fields.forEach(f=> grid.appendChild(makeField(f, sec.id)));
+  
+  sec.fields.forEach(f => {
+    const fieldEl = makeField(f, sec.id);
+
+    // Global Inheritance Rule: Remove WhatsApp elements entirely for internal record logs
+    if (sec.recordOnly) {
+      const waBtn = fieldEl.querySelector(".fl-wa");
+      if (waBtn) waBtn.remove();
+    }
+
+    // Protection rule: Prevent creative AI writing on disciplinary descriptions
+    if (sec.manualOnlyDrafting && f.l.includes("Description")) {
+      const aiBtn = fieldEl.querySelector(".fl-ai");
+      if (aiBtn) {
+        aiBtn.setAttribute("title", "AI Generation disabled to guarantee accurate narrative recording.");
+        aiBtn.style.opacity = "0.25";
+        aiBtn.style.pointerEvents = "none";
+      }
+    }
+
+    grid.appendChild(fieldEl);
+  });
+
   document.getElementById("assistBtn").addEventListener("click", ()=> openAI(sec.id));
   document.getElementById("resetBtn").addEventListener("click", ()=>{
-    sec.fields.forEach(f=> LS.del(vKey(sec.id, f.l))); renderPanel(); toast("Record reset"); });
+    if(confirm("Discard changes and reset this entry form?")) {
+      sec.fields.forEach(f=> LS.del(vKey(sec.id, f.l))); renderPanel(); toast("Record reset completed");
+    }
+  });
+  
   if(document.getElementById("libBtn")) document.getElementById("libBtn").addEventListener("click", openLibrary);
   if(document.getElementById("gradeBtn")) document.getElementById("gradeBtn").addEventListener("click", ()=> gradeSubmission(true));
+  
   document.getElementById("recSel").addEventListener("change", e=>{ setCurRec(sec.id, e.target.value); renderPanel(); });
-  document.getElementById("recNew").addEventListener("click", ()=>{ newRecord(sec.id); renderPanel(); toast("New "+sec.name+" record — fill it in, or use the ✦ icon on each field"); });
-  if(document.getElementById("recDel")) document.getElementById("recDel").addEventListener("click", ()=>{ deleteRecord(sec.id, curRecId(sec.id)); renderPanel(); toast("Record deleted"); });
+  document.getElementById("recNew").addEventListener("click", ()=>{ newRecord(sec.id); renderPanel(); toast("New database log slot prepared."); });
+  if(document.getElementById("recDel")) document.getElementById("recDel").addEventListener("click", ()=>{ if(confirm("Permanently erase record?")) { deleteRecord(sec.id, curRecId(sec.id)); renderPanel(); toast("Record deleted"); } });
 }
 function setActive(id){ activeId=id; renderPanel(); refreshNavStates();
   const ms=document.querySelector(".main-scroll"); if(ms) ms.scrollIntoView({behavior:"smooth",block:"start"}); }
