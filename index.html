@@ -896,7 +896,9 @@ const SECTIONS = [
       F("Profile photo","","upload"),
       F("CV (PDF)","","upload"),
       F("Short bio","Constitutional law scholar focused on fundamental rights and public-interest litigation in Pakistan.","textarea",null,true)
-    ]},/* ---------- 50-FIELD MASTER STUDENT PROFILE CARD ---------- */
+  ]},
+
+  /* ---------- 50-FIELD MASTER STUDENT PROFILE CARD ---------- */
   { id:"student-master-card", name:"Student Master Profile (50-Field Card)", icon:"students", group:"top",
     desc:"Comprehensive academic dossier tracking personal identifiers, HEC standing, grading transcripts, library access, and moot court files.",
     fields:[
@@ -967,11 +969,12 @@ const SECTIONS = [
       F("Campus WiFi Network Device MAC Registration","7A:B4:2C:11:DE:9F"),
       F("Target Provincial Bar Council Intimation Date Target","September 2028 Allocation Window"),
       F("Assigned Law Faculty Research Guide / Mentor","Dr. Abdul Haq Baloch")
-    ]}
+    ]}, // <--- FIXED: Added the missing array comma here
+
   /* ---------- NEW LAW FACULTY ADVISORY & LOG CARDS ---------- */
   { id:"internships", name:"Internship & Chambers Placement", icon:"profile", group:"side",
     desc:"Track student legal training in chambers, law firms, courts, and legal aid clinics.",
-    recordOnly: true, // System flag to remove WhatsApp broadcast buttons
+    recordOnly: true,
     fields:[
       F("Student","Select Student..."),
       F("Placement type","Chambers","select",["Chambers","Law Firm","Court","Legal Aid Org"]),
@@ -1001,8 +1004,8 @@ const SECTIONS = [
   { id:"disciplinary-log", name:"Disciplinary / Conduct Log", icon:"observation", group:"side",
     desc:"Confidential disciplinary logs. AI functionality is restricted solely to formatting/summarization.",
     recordOnly: true,
-    isConfidential: true, // Special UI indicator badge trigger
-    manualOnlyDrafting: true, // Restricts AI from auto-generating original descriptions
+    isConfidential: true,
+    manualOnlyDrafting: true,
     fields:[
       F("Student","Select Student..."),
       F("Incident type","Exam misconduct","select",["Plagiarism","Unauthorized absence","Exam misconduct","Other"]),
@@ -1028,7 +1031,7 @@ const SECTIONS = [
   { id:"guest-lectures", name:"Guest Lecture / Seminar Log", icon:"syllabus", group:"top",
     desc:"Records of specialized seminars with supplemental bibliographic tracking.",
     recordOnly: true,
-    hasSourceCitation: true, // Enables the Source & Citation module beneath the record grid
+    hasSourceCitation: true,
     fields:[
       F("Speaker name","Justice (R) Syed Muhammad Khan"),
       F("Speaker credentials/affiliation","Former High Court Judge / Supreme Court Advocate"),
@@ -1041,7 +1044,7 @@ const SECTIONS = [
     ]}
 ];
 
-/* ============ STATE & STORAGE ============ */
+/* ============ STATE & STORAGE ============ *//
 const LS = {
   get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
   set(k,v){ try{ localStorage.setItem(k,v); return true; }catch(e){ return false; } },
